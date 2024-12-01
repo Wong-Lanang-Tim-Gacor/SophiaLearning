@@ -18,7 +18,7 @@ class RegisterController extends Controller
         try {
             $user = User::create($registerRequest->validated());
             $token = $user->createToken('auth_token')->plainTextToken;
-            $token['token'] = $token;
+            $user['token'] = $token;
             return ResponseHelper::success($user, "success register data!");
         } catch (\Exception $e) {
             return ResponseHelper::error($e->getMessage(), 500);
