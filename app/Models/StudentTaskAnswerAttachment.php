@@ -9,4 +9,11 @@ class StudentTaskAnswerAttachment extends Model
 {
     /** @use HasFactory<\Database\Factories\StudentTaskAnswerAttachmentFactory> */
     use HasFactory;
+
+    protected $guarded = ['id'];
+
+    public function studentTaskAnswerCollection()
+    {
+        return $this->belongsTo(StudentTaskAnswerCollection::class, 'student_task_answer_collection_id');
+    }
 }
