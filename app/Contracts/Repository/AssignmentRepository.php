@@ -17,12 +17,15 @@ class AssignmentRepository extends BaseRepository implements AssignmentInterface
     {
         return $this->model
             ->query()
+            ->with(['topic','classroom'])
             ->get();
     }
 
     public function show(mixed $id)
     {
-        return $this->model->query()->findOrFail($id);
+        return $this->model->query()
+            ->with(['topic','classroom','studentAnswer','studentAnswer.attachment'])
+            ->findOrFail($id);
     }
 
     public function create(array $data)
