@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Contracts\Interface\AssignmentInterface;
 use App\Contracts\Interface\ClassroomInterface;
+use App\Contracts\Repository\AssignmentRepository;
 use App\Contracts\Repository\ClassroomRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
 
     private array $register = [
         ClassroomInterface::class => ClassroomRepository::class,
+        AssignmentInterface::class => AssignmentRepository::class
     ];
     public function register(): void
     {
