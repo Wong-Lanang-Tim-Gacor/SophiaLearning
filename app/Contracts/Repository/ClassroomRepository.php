@@ -38,7 +38,7 @@ class ClassroomRepository extends BaseRepository implements ClassroomInterface
     public function update(mixed $id, array $data)
     {
         try {
-            $this->model->findOrFail($id)->update($data);
+            $this->show($id)->update($data);
         } catch (\Exception $e) {
             return $e->getMessage();
         }

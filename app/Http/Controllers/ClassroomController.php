@@ -58,7 +58,7 @@ class ClassroomController extends Controller
     {
         try {
             $this->classroom->update($id, $request->validated());
-            return ResponseHelper::success($this->classroom->get(), "success updated data!");
+            return ResponseHelper::success($this->classroom->show($id), "success updated data!");
         } catch (\Exception $exception) {
             return ResponseHelper::error(null, $exception->getMessage());
         }

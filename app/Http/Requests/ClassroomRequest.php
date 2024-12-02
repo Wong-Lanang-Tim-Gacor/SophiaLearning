@@ -24,14 +24,15 @@ class ClassroomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
-            'identifier_code' => 'required|string|unique:classrooms,identifier_code,'.$this->identifier_code,
-            'class_name' => 'string|required',
+            'user_id' => 'sometimes|required|exists:users,id',
+            'identifier_code' => 'sometimes|required|string|unique:classrooms,identifier_code,' . $this->identifier_code,
+            'class_name' => 'sometimes|string|required',
             'description' => 'string|nullable',
             'background_image' => 'string|nullable',
             'background_color' => 'string|nullable',
             'text_color' => 'string|nullable',
             'status' => [
+                'sometimes',
                 'required',
                 Rule::enum(ClassroomStatusEnums::class)
             ]
