@@ -2,7 +2,7 @@
 
 namespace App\Contracts\Interface\Eloquent;
 
-interface CreateInterface
+interface StoreInterface
 {
     public function create(array $data);
 }
