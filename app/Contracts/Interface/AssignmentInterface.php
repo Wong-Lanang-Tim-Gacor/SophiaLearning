@@ -10,5 +10,9 @@ use App\Contracts\Interface\Eloquent\UpdateInterface;
 
 interface AssignmentInterface extends GetInterface,UpdateInterface,DeleteInterface,ShowInterface,StoreInterface
 {
+    public function getAssignmentByClassId(mixed $id);
 
+    public function getAverageScore(mixed $id);
+
+    public function getAssignmentByTopic(mixed $id);
 }

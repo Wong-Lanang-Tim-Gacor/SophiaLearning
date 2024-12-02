@@ -47,4 +47,27 @@ class AssignmentRepository extends BaseRepository implements AssignmentInterface
         }
         return true;
     }
+
+    public function getAssignmentByClassId(mixed $id)
+    {
+        return $this->model
+            ->query()
+            ->with(['topic','classroom','studentAnswer','studentAnswer.attachment'])
+            ->where('classroom_id', $id)
+            ->get();
+    }
+
+    public function getAverageScore(mixed $id)
+    {
+        return $this->show($id)->avg('max_score');
+    }
+
+    public function getAssignmentByTopic(mixed $id)
+    {
+        return $this->model
+            ->query()
+            ->with(['topic','classroom','studentAnswer','studentAnswer.attachment'])
+            ->where('topic_id', $id)
+            ->get();
+    }
 }

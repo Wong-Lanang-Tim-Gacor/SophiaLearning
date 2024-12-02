@@ -1,9 +1,15 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\LogoutController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\Auth\{
+    LoginController,
+    LogoutController,
+    RegisterController
+};
+use App\Http\Controllers\{
+    ClassroomController,
+    AssignmentController
+};
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,5 +24,7 @@ Route::prefix('auth')->group(function () {
     Route::post('/logout', [LogoutController::class, 'handle'])->middleware('auth:sanctum');
 });
 
-
-Route::apiResource('classrooms', ClassroomController::class)->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('classrooms', ClassroomController::class);
+    Route::apiResource('assignments', AssignmentController::class);
+});
