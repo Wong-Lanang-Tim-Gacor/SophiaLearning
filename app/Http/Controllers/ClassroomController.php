@@ -12,10 +12,10 @@ class ClassroomController extends Controller
 {
     use ValidatesRequest;
     private ClassroomInterface $classroom;
+
     public function __construct(
         ClassroomInterface $classroom
-    )
-    {
+    ) {
         $this->classroom = $classroom;
     }
     /**
@@ -23,7 +23,7 @@ class ClassroomController extends Controller
      */
     public function index()
     {
-        return ResponseHelper::success($this->classroom->get(),"success retried data!");
+        return ResponseHelper::success($this->classroom->get(), "success retried data!");
     }
 
     /**
@@ -31,11 +31,11 @@ class ClassroomController extends Controller
      */
     public function store(ClassroomRequest $request)
     {
-        try{
+        try {
             $this->classroom->create($request->validated());
-            return ResponseHelper::success($this->classroom->get(),"success created data!");
-        }catch (\Exception $exception){
-            return ResponseHelper::error(null,$exception->getMessage());
+            return ResponseHelper::success($this->classroom->get(), "success created data!");
+        } catch (\Exception $exception) {
+            return ResponseHelper::error(null, $exception->getMessage());
         }
     }
 
@@ -44,10 +44,10 @@ class ClassroomController extends Controller
      */
     public function show(string $id)
     {
-        try{
-            return ResponseHelper::success($this->classroom->show($id),"success retried data!");
-        }catch (\Exception $e){
-            return ResponseHelper::error(null,$e->getMessage());
+        try {
+            return ResponseHelper::success($this->classroom->show($id), "success retried data!");
+        } catch (\Exception $e) {
+            return ResponseHelper::error(null, $e->getMessage());
         }
     }
 
@@ -56,11 +56,11 @@ class ClassroomController extends Controller
      */
     public function update(ClassroomRequest $request, string $id)
     {
-        try{
+        try {
             $this->classroom->update($id, $request->validated());
-            return ResponseHelper::success($this->classroom->get(),"success updated data!");
-        } catch (\Exception $exception){
-            return ResponseHelper::error(null,$exception->getMessage());
+            return ResponseHelper::success($this->classroom->get(), "success updated data!");
+        } catch (\Exception $exception) {
+            return ResponseHelper::error(null, $exception->getMessage());
         }
     }
 
@@ -69,11 +69,11 @@ class ClassroomController extends Controller
      */
     public function destroy(string $id)
     {
-        try{
+        try {
             $this->classroom->delete($id);
             return ResponseHelper::success("success deleted data!");
-        }catch (\Exception $e){
-            return ResponseHelper::error(null,$e->getMessage());
+        } catch (\Exception $e) {
+            return ResponseHelper::error(null, $e->getMessage());
         }
     }
 }
