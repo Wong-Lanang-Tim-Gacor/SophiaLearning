@@ -16,14 +16,15 @@ class ClassroomRepository extends BaseRepository implements ClassroomInterface
     {
         return $this->model
             ->query()
-            ->with(['student_class', 'assignments', 'teacher'])
+            ->withCount('student_class')
+            ->with(['assignments', 'teacher'])
             ->get();
     }
     public function show(mixed $id)
     {
         return $this->model
             ->query()
-            ->with(['student_class', 'assignments', 'teacher'])
+            ->with(['student_class', 'assignments', 'assignments.studentAnswer', 'assignments.studentAnswer.attachment', 'teacher'])
             ->findOrFail($id);
     }
     public function create(array $data)
