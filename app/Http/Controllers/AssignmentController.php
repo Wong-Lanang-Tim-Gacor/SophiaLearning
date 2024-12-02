@@ -79,10 +79,10 @@ class AssignmentController extends Controller
         }
     }
 
-    public function getAverageScore(string $id)
+    public function getAveragePoint(string $id)
     {
         $data = [
-            'average_score' => $this->assignment->getAverageScore($id),
+            'average_score' => $this->assignment->getAveragePoint($id),
         ];
         return ResponseHelper::success($data, "success retrieved data!");
     }
@@ -93,7 +93,7 @@ class AssignmentController extends Controller
         return ResponseHelper::success($assignment, "success retrieved data!");
     }
 
-    public function getAssignmentByTopic(string $id)
+    public function getAssignmentByTopicId(string $id)
     {
         $assignment = $this->assignment->getAssignmentByTopic($id);
         return ResponseHelper::success($assignment, "success retrieved data!");

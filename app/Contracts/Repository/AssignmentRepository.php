@@ -18,13 +18,14 @@ class AssignmentRepository extends BaseRepository implements AssignmentInterface
         return $this->model
             ->query()
             ->with(['topic','classroom'])
+            ->withAvg('studentAnswer', 'point')
             ->get();
     }
 
     public function show(mixed $id)
     {
         return $this->model->query()
-            ->with(['topic','classroom','studentAnswer','studentAnswer.attachment'])
+            ->with(['topic','classroom','studentAnswer','studentAnswer.attachments'])
             ->findOrFail($id);
     }
 
@@ -52,21 +53,30 @@ class AssignmentRepository extends BaseRepository implements AssignmentInterface
     {
         return $this->model
             ->query()
-            ->with(['topic','classroom','studentAnswer','studentAnswer.attachment'])
+            ->with(['topic','classroom','studentAnswer','studentAnswer.attachments'])
             ->where('classroom_id', $id)
             ->get();
     }
 
-    public function getAverageScore(mixed $id)
+    public function getAveragePoint(mixed $id)
     {
-        return $this->show($id)->avg('max_score');
+        try{
+            $dataWithAverage = $this->model->query()
+                ->with(['topic', 'classroom'])
+                ->withAvg('studentAnswer', 'point')
+                ->findOrFail($id);
+            return number_format($dataWithAverage->student_answer_avg_point,2);
+        }catch (QueryException $e){
+            return $e->getMessage();
+        }
+
     }
 
     public function getAssignmentByTopic(mixed $id)
     {
         return $this->model
             ->query()
-            ->with(['topic','classroom','studentAnswer','studentAnswer.attachment'])
+            ->with(['topic','classroom','studentAnswer','studentAnswer.attachments'])
             ->where('topic_id', $id)
             ->get();
     }

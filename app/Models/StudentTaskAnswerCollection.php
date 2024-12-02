@@ -20,6 +20,6 @@ class StudentTaskAnswerCollection extends Model
     }
     public function attachments(): HasMany
     {
-        return $this->hasMany(StudentTaskAnswerAttachment::class);
+        return $this->hasMany(StudentTaskAnswerAttachment::class,'student_task_answer_id');
     }
 }
