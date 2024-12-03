@@ -25,7 +25,7 @@ class AssignmentRepository extends BaseRepository implements AssignmentInterface
     public function show(mixed $id)
     {
         return $this->model->query()
-            ->with(['topic','classroom','studentAnswer','studentAnswer.attachments'])
+            ->with(['topic','classroom','assignmentChat','studentAnswer','studentAnswer.attachments'])
             ->findOrFail($id);
     }
 

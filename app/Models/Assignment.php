@@ -24,4 +24,9 @@ class Assignment extends Model
     {
         return $this->hasMany(StudentTaskAnswerCollection::class);
     }
+
+    public function assignmentChat()
+    {
+        return $this->hasMany(AssignmentChat::class);
+    }
 }
