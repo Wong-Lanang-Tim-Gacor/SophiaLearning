@@ -7,7 +7,8 @@ use App\Http\Controllers\Auth\{
 };
 use App\Http\Controllers\{
     ClassroomController,
-    AssignmentController
+    AssignmentController,
+    AssignmentChatController
 };
 
 use Illuminate\Http\Request;
@@ -29,10 +30,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::prefix('assignments')->group(function () {
         Route::apiResource('/data', AssignmentController::class);
+        Route::apiResource('/chat', AssignmentChatController::class)->except(['index','show']);
+        Route::get('/chat/{assignmentId}', [AssignmentChatController::class, 'getChatByAssignmentId']);
 
         Route::get('/average-point/{id}', [AssignmentController::class, 'getAveragePoint']);
         Route::get('/class/{class_id}', [AssignmentController::class, 'getAssignmentByClassId']);
         Route::get('/topic/{topic_id}', [AssignmentController::class, 'getAssignmentByTopicId']);
-//        Route::apiResource('/chat', \App\Models\AssignmentChat::class);
+
     });
 });
