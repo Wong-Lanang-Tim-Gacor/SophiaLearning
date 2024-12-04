@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Console\Commands\MakeInterface;
+use App\Console\Commands\MakeRepository;
 use App\Contracts\Interface\AssignmentChatInterface;
 use App\Contracts\Interface\AssignmentInterface;
 use App\Contracts\Interface\ClassroomInterface;
@@ -31,6 +33,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->commands([
+            MakeInterface::class,
+            MakeRepository::class,
+        ]);
     }
 }
