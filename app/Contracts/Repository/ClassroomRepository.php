@@ -2,7 +2,7 @@
 
 namespace App\Contracts\Repository;
 
-use App\Contracts\Interface\ClassroomInterface;
+use App\Contracts\Interfaces\ClassroomInterface;
 use App\Models\Classroom;
 use Illuminate\Database\QueryException;
 

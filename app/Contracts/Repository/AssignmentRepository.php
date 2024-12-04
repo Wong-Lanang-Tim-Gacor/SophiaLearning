@@ -2,7 +2,7 @@
 
 namespace App\Contracts\Repository;
 
-use App\Contracts\Interface\AssignmentInterface;
+use App\Contracts\Interfaces\AssignmentInterface;
 use App\Models\Assignment;
 use Illuminate\Database\QueryException;
 

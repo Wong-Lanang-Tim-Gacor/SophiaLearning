@@ -2,7 +2,7 @@
 
 namespace App\Contracts\Repository;
 
-use App\Contracts\Interface\AssignmentChatInterface;
+use App\Contracts\Interfaces\AssignmentChatInterface;
 use App\Models\AssignmentChat;
 use App\Models\Classroom;
 use Illuminate\Database\QueryException;
