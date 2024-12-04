@@ -17,7 +17,7 @@ class AssignmentRepository extends BaseRepository implements AssignmentInterface
     {
         return $this->model
             ->query()
-            ->with(['topic','classroom'])
+            ->with(['classroom'])
             ->withAvg('studentAnswer', 'point')
             ->get();
     }
@@ -25,7 +25,7 @@ class AssignmentRepository extends BaseRepository implements AssignmentInterface
     public function show(mixed $id)
     {
         return $this->model->query()
-            ->with(['topic','classroom','assignmentChat','studentAnswer','studentAnswer.attachments'])
+            ->with(['classroom','assignmentChat','studentAnswer','studentAnswer.attachments'])
             ->findOrFail($id);
     }
 
