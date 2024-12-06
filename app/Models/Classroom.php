@@ -22,4 +22,10 @@ class Classroom extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+     // Relasi untuk kelas yang memiliki topik (one-to-many)
+     public function topics()
+     {
+         return $this->hasMany(Topic::class, 'classroom_id');
+     }
 }

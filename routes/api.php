@@ -8,7 +8,8 @@ use App\Http\Controllers\Auth\{
 use App\Http\Controllers\{
     ClassroomController,
     AssignmentController,
-    AssignmentChatController
+    AssignmentChatController,
+    TopicController
 };
 
 use Illuminate\Http\Request;
@@ -25,10 +26,11 @@ Route::prefix('auth')->group(function () {
     Route::post('/logout', [LogoutController::class, 'handle'])->middleware('auth:sanctum');
 });
 
-// Route::apiResource('classrooms', ClassroomController::class);
+Route::apiResource('classrooms', ClassroomController::class);
+Route::apiResource('topics', TopicController::class);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource('classrooms', ClassroomController::class);
+    // Route::apiResource('classrooms', ClassroomController::class);
 
     Route::prefix('assignments')->group(function () {
         Route::apiResource('/data', AssignmentController::class);
