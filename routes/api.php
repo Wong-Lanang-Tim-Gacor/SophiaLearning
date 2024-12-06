@@ -25,6 +25,8 @@ Route::prefix('auth')->group(function () {
     Route::post('/logout', [LogoutController::class, 'handle'])->middleware('auth:sanctum');
 });
 
+// Route::apiResource('classrooms', ClassroomController::class);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('classrooms', ClassroomController::class);
 

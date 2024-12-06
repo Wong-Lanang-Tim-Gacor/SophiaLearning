@@ -2,76 +2,66 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\Interface\ClassroomInterface;
+use App\Contracts\Interfaces\ClassroomInterface;
 use App\Helpers\ResponseHelper;
 use App\Http\Requests\ClassroomRequest;
-use App\Traits\ValidatesRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\ClassroomUpdateRequest;
 
 class ClassroomController extends Controller
 {
-    use ValidatesRequest;
     private ClassroomInterface $classroom;
 
-    public function __construct(
-        ClassroomInterface $classroom
-    ) {
+    public function __construct(ClassroomInterface $classroom)
+    {
         $this->classroom = $classroom;
     }
-    /**
-     * Display a listing of the resource.
-     */
+    
+
     public function index()
     {
-        return ResponseHelper::success($this->classroom->get(), "success retried data!");
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(ClassroomRequest $request)
-    {
         try {
-            $this->classroom->create($request->validated());
-            return ResponseHelper::success($this->classroom->get(), "success created data!");
-        } catch (\Exception $exception) {
-            return ResponseHelper::error(null, $exception->getMessage());
+            $classroom = $this->classroom->get();
+            return ResponseHelper::success($classroom, 'Classroom retrieved successfully.');
+        } catch (\Exception $e) {
+            return ResponseHelper::error([], $e->getMessage());
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
+    public function store(ClassroomRequest $request)
+    {
+        try {
+            $classroom = $this->classroom->store($request->validated());
+            return ResponseHelper::success($this->classroom->show($classroom->id), 'Classroom created successfully.', 201);
+        } catch (\Exception $e) {
+            return ResponseHelper::error($request->all(), $e->getMessage());
+        }
+    }
+
     public function show(string $id)
     {
         try {
-            return ResponseHelper::success($this->classroom->show($id), "success retried data!");
+            $classroom = $this->classroom->show($id);
+            return ResponseHelper::success($classroom, 'Classroom retrieved successfully.');
         } catch (\Exception $e) {
             return ResponseHelper::error(null, $e->getMessage());
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(ClassroomRequest $request, string $id)
+    public function update(ClassroomUpdateRequest $request, string $id)
     {
         try {
             $this->classroom->update($id, $request->validated());
-            return ResponseHelper::success($this->classroom->show($id), "success updated data!");
-        } catch (\Exception $exception) {
-            return ResponseHelper::error(null, $exception->getMessage());
+            return ResponseHelper::success($this->classroom->show($id), 'Classroom updated successfully.');
+        } catch (\Exception $e) {
+            return ResponseHelper::error(null, $e->getMessage());
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         try {
             $this->classroom->delete($id);
-            return ResponseHelper::success("success deleted data!");
+            return ResponseHelper::success(null, "Classroom deleted successfully.");
         } catch (\Exception $e) {
             return ResponseHelper::error(null, $e->getMessage());
         }

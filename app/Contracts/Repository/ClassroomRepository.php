@@ -12,44 +12,41 @@ class ClassroomRepository extends BaseRepository implements ClassroomInterface
     {
         $this->model = $classroom;
     }
-    public function get()
+
+    public function get(): mixed
     {
         return $this->model
             ->query()
-            ->withCount('student_class')
-            ->with(['assignments', 'teacher'])
+            ->withCount('students')
+            ->with(['teacher:id,name']) // hanya nama guru
             ->get();
     }
-    public function show(mixed $id)
+
+    public function show(mixed $id): mixed
     {
         return $this->model
             ->query()
-            ->with(['student_class', 'assignments', 'teacher'])
+            ->withCount('students')
+            ->with(['students', 'teacher'])
             ->findOrFail($id);
     }
-    public function create(array $data)
+
+    public function store(array $data): mixed
     {
-        try {
-            $this->model->create($data);
-        } catch (\Exception $e) {
-            return $e->getMessage();
-        }
+        return $this->model
+            ->query()
+            ->create($data);
     }
-    public function update(mixed $id, array $data)
+
+    public function update(mixed $id, array $data): mixed
     {
-        try {
-            $this->show($id)->update($data);
-        } catch (\Exception $e) {
-            return $e->getMessage();
-        }
+        return $this->show($id)
+            ->update($data);
     }
-    public function delete(mixed $id)
+
+    public function delete(mixed $id): mixed
     {
-        try {
-            $this->show($id)->delete();
-        } catch (QueryException $e) {
-            if ($e->errorInfo[1] == 1451) return false;
-        }
-        return true;
+        return $this->show($id)
+            ->delete();
     }
 }

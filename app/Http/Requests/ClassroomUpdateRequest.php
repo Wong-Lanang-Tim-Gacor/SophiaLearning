@@ -5,9 +5,8 @@ namespace App\Http\Requests;
 use App\Traits\ValidatesRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ClassroomRequest extends FormRequest
+class ClassroomUpdateRequest extends FormRequest
 {
-
     use ValidatesRequest;
     /**
      * Determine if the user is authorized to make this request.
@@ -25,13 +24,13 @@ class ClassroomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
-            'identifier_code' => 'required|string|unique:classrooms,identifier_code,' . $this->identifier_code,
-            'class_name' => 'string|required',
-            'description' => 'string|nullable',
-            'background_image' => 'string|nullable',
-            'background_color' => 'string|nullable',
-            'text_color' => 'string|nullable',
+            'user_id' => 'sometimes|required|exists:users,id',
+            'identifier_code' => 'sometimes|required|string|unique:classrooms,identifier_code,' . $this->identifier_code,
+            'class_name' => 'sometimes|string|required',
+            'description' => 'sometimes|string|nullable',
+            'background_image' => 'sometimes|string|nullable',
+            'background_color' => 'sometimes|string|nullable',
+            'text_color' => 'sometimes|string|nullable',
             'is_archived' => 'sometimes|boolean',
         ];
     }
