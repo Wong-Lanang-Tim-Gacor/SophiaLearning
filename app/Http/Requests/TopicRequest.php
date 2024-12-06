@@ -25,6 +25,7 @@ class TopicRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'classroom_id' => 'required|exists:classrooms,id',
             'topic_name' => 'required'
         ];
     }

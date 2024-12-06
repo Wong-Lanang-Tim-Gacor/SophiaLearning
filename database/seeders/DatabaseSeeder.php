@@ -25,9 +25,9 @@ class DatabaseSeeder extends Seeder
             'phone' => "0812345678",
         ]);
 
-        User::factory(10)->create();
+        User::factory(5)->create();
+        Classroom::factory(2)->create();
         // Topic::factory(10)->create();
-        // Classroom::factory(10)->create();
         // Assignment::factory(10)->create();
     }
 }

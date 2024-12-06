@@ -278,4 +278,199 @@ class ClassroomControllerTest extends TestCase
         // Memastikan classroom tidak ada lagi di database
         $this->assertDatabaseMissing('classrooms', ['id' => $classroom->id]);
     }
+
+
+    /**
+     * Test untuk endpoint joinClass
+     *
+     * @return void
+     */
+    public function test_user_can_join_class()
+    {
+        // Buat user dan login
+        $user = User::factory()->create();
+        Sanctum::actingAs($user, ['*']); // Authenticated as user
+
+        // Buat classroom untuk diuji
+        $classroom = Classroom::factory()->create();
+
+        // Request untuk bergabung ke kelas
+        $response = $this->postJson("/api/classrooms/{$classroom->id}/join");
+
+        // Verifikasi status dan pesan
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'meta' => ['status', 'message']
+        ]);
+
+        // Verifikasi bahwa siswa telah bergabung dengan kelas
+        $this->assertDatabaseHas('student_has_classes', [
+            'classroom_id' => $classroom->id,
+            'student_id' => $user->id
+        ]);
+    }
+
+    /**
+     * Test untuk endpoint joinClass
+     * dengan user yang sudah bergabung mencoba bergabung lagi
+     * @return void
+     */
+    public function test_user_cannot_join_class_already_joined()
+    {
+        // Buat user dan login
+        $user = User::factory()->create();
+        Sanctum::actingAs($user, ['*']); // Authenticated as user
+
+        // Buat classroom untuk diuji
+        $classroom = Classroom::factory()->create();
+
+        // Tambahkan user ke classroom secara manual agar sudah bergabung
+        $classroom->students()->attach($user->id);
+
+        // Coba request untuk bergabung lagi ke kelas yang sama
+        $response = $this->postJson("/api/classrooms/{$classroom->id}/join");
+
+        // Verifikasi status dan pesan error
+        $response->assertStatus(400);
+        $response->assertJsonStructure([
+            'meta' => ['status', 'message']
+        ]);
+    }
+
+    /**
+     * Test untuk endpoint joinClass
+     * di kelas yang tidak valid
+     * @return void
+     */
+    public function test_user_cannot_join_non_existing_class()
+    {
+        // Buat user dan login
+        $user = User::factory()->create();
+        Sanctum::actingAs($user, ['*']); // Authenticated as user
+
+        // Request untuk bergabung dengan kelas yang tidak ada
+        $response = $this->postJson("/api/classrooms/999/join");
+
+        // Verifikasi status dan pesan error
+        $response->assertStatus(400);
+        $response->assertJsonStructure([
+            'meta' => ['status', 'message']
+        ]);
+    }
+
+    /**
+     * Test untuk endpoint leaveClass
+     *
+     * @return void
+     */
+    public function test_student_can_leave_class()
+    {
+        // Buat user dan login
+        $user = User::factory()->create();
+        Sanctum::actingAs($user, ['*']); // Authenticated as user
+
+        $classroom = Classroom::factory()->create();
+
+        // Menambahkan siswa ke dalam kelas
+        $classroom->students()->attach($user->id);
+
+        // Melakukan request untuk keluar dari kelas
+        $response = $this->postJson("/api/classrooms/{$classroom->id}/leave");
+
+        // Verifikasi bahwa siswa sudah keluar dan response yang dikembalikan adalah sukses
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'meta' => ['status', 'message']
+        ]);
+
+        // Memastikan bahwa siswa telah dihapus dari tabel pivot
+        $this->assertDatabaseMissing('student_has_classes', [
+            'classroom_id' => $classroom->id,
+            'student_id' => $user->id,
+        ]);
+    }
+
+    /**
+     * Test untuk endpoint getJoinClasses
+     *
+     * @return void
+     */
+    public function test_student_can_get_joined_classes()
+    {
+        // Buat user dan login
+        $user = User::factory()->create();
+        Sanctum::actingAs($user, ['*']); // Authenticated as user
+
+        $classroom1 = Classroom::factory()->create();
+        $classroom2 = Classroom::factory()->create();
+
+        // Menambahkan siswa ke dalam kelas
+        $classroom1->students()->attach($user->id);
+        $classroom2->students()->attach($user->id);
+
+        // Melakukan request untuk mendapatkan kelas yang diikuti oleh siswa
+        $response = $this->getJson('/api/classrooms/student/joined');
+
+        // Verifikasi response dan status yang dikembalikan
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'meta' => ['status', 'message']
+        ]);
+
+        // Memastikan bahwa kedua kelas muncul dalam response
+        $response->assertJsonFragment([
+            'class_name' => $classroom1->class_name,
+        ]);
+        $response->assertJsonFragment([
+            'class_name' => $classroom2->class_name,
+        ]);
+    }
+
+    /**
+     * Test untuk endpoint getCreatedClasses
+     *
+     * @return void
+     */
+    public function test_teacher_can_get_created_classes()
+    {
+        // Buat user (guru) dan login
+        $teacher = User::factory()->create();
+        Sanctum::actingAs($teacher, ['*']); // Authenticated as teacher
+
+        // Membuat beberapa kelas
+        $classroom1 = Classroom::factory()->create(['user_id' => $teacher->id]);
+        $classroom2 = Classroom::factory()->create(['user_id' => $teacher->id]);
+
+        // Melakukan request untuk mendapatkan kelas yang dibuat oleh guru
+        $response = $this->getJson('/api/classrooms/teacher/created');
+
+        // Verifikasi response dan status yang dikembalikan
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'meta' => ['status', 'message'],
+            'data' => [
+                '*' => [
+                    'id',
+                    'identifier_code',
+                    'class_name',
+                    'description',
+                    'background_image',
+                    'background_color',
+                    'text_color',
+                    'is_archived',
+                    'students_count',
+                    'created_at',
+                    'updated_at'
+                ]
+            ]
+        ]);
+
+        // Memastikan bahwa kedua kelas muncul dalam response
+        $response->assertJsonFragment([
+            'class_name' => $classroom1->class_name,
+        ]);
+        $response->assertJsonFragment([
+            'class_name' => $classroom2->class_name,
+        ]);
+    }
 }

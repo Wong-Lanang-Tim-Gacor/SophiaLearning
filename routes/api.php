@@ -26,20 +26,24 @@ Route::prefix('auth')->group(function () {
     Route::post('/logout', [LogoutController::class, 'handle'])->middleware('auth:sanctum');
 });
 
-Route::apiResource('classrooms', ClassroomController::class);
-Route::apiResource('topics', TopicController::class);
+// Route::apiResource('classrooms', ClassroomController::class);
 
 Route::middleware('auth:sanctum')->group(function () {
-    // Route::apiResource('classrooms', ClassroomController::class);
+    Route::apiResource('classrooms', ClassroomController::class);
+    Route::post('/classrooms/{classroom_id}/join', [ClassroomController::class, 'joinClass']);
+    Route::post('/classrooms/{classroom_id}/leave', [ClassroomController::class, 'leaveClass']);
+    Route::get('/classrooms/student/joined', [ClassroomController::class, 'getJoinedClasses']);
+    Route::get('/classrooms/teacher/created', [ClassroomController::class, 'getCreatedClasses']);
+    
+    Route::apiResource('topics', TopicController::class);
 
     Route::prefix('assignments')->group(function () {
         Route::apiResource('/data', AssignmentController::class);
-        Route::apiResource('/chat', AssignmentChatController::class)->except(['index','show']);
+        Route::apiResource('/chat', AssignmentChatController::class)->except(['index', 'show']);
         Route::get('/chat/{assignmentId}', [AssignmentChatController::class, 'getChatByAssignmentId']);
 
         Route::get('/average-point/{id}', [AssignmentController::class, 'getAveragePoint']);
         Route::get('/class/{class_id}', [AssignmentController::class, 'getAssignmentByClassId']);
         Route::get('/topic/{topic_id}', [AssignmentController::class, 'getAssignmentByTopicId']);
-
     });
 });

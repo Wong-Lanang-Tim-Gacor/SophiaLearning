@@ -12,6 +12,8 @@ class StudentHasClass extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     // pivotFk
     public function student()
     {

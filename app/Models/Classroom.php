@@ -14,7 +14,7 @@ class Classroom extends Model
     // Relasi untuk siswa yang tergabung dalam kelas (many-to-many)
     public function students()
     {
-        return $this->belongsToMany(User::class, 'student_has_classes', 'classroom_id', 'student_id');
+        return $this->belongsToMany(User::class, 'student_has_classes', 'classroom_id', 'student_id')->withPivot('joined_at');
     }
 
     // Relasi untuk guru yang membuat kelas ini (one-to-many)
