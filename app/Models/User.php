@@ -24,4 +24,17 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+
+    // Relasi untuk kelas yang dibuat oleh guru (one-to-many)
+    public function classroomsCreated()
+    {
+        return $this->hasMany(Classroom::class, 'user_id');
+    }
+
+    // Relasi untuk kelas yang diikuti oleh siswa (many-to-many)
+    public function classroomsJoined()
+    {
+        return $this->belongsToMany(Classroom::class, 'student_has_classes', 'student_id', 'classroom_id');
+    }
 }
