@@ -20,11 +20,14 @@ class ClassroomFactory extends Factory
     {
         $classRoomsStatus = ClassroomStatusEnums::toArray();
         return [
-            'identifier_code' => $this->faker->unique()->word,
-            'user_id' => User::inRandomOrder()->first()->id,
+            'user_id' => User::factory(),
+            'identifier_code' => $this->faker->unique()->lexify('CLASS-?????'),
             'class_name' => $this->faker->word,
-            'description' => $this->faker->sentence,
-            'status' => $classRoomsStatus[array_rand($classRoomsStatus)],
+            'description' => $this->faker->text,
+            'background_image' => 'class-bg-default.jpg',
+            'background_color' => $this->faker->hexColor,
+            'text_color' => $this->faker->hexColor,
+            'is_archived' => false,
         ];
     }
 }

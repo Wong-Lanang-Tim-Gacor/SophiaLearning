@@ -14,14 +14,14 @@ return new class extends Migration
     {
         Schema::create('classrooms', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('identifier_code')->unique();
             $table->string('class_name');
             $table->text('description')->nullable();
             $table->string('background_image')->default('class-bg-default.jpg');
             $table->string('background_color')->nullable()->default('#FFFFFF');
             $table->string('text_color')->nullable()->default('#000000');
-            $table->enum('status', ClassroomStatusEnums::toArray())->default(ClassroomStatusEnums::ACTIVE);
+            $table->boolean('is_archived')->default(false);
             $table->timestamps();
         });
     }
