@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('student_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('classroom_id')->constrained('classrooms')->onDelete('cascade');
             $table->unique(['student_id', 'classroom_id']); // memastikan student hanya bisa masuk sekali ke kelas yang sama
-            $table->timestamps();
+            $table->timestamp('joined_at')->useCurrent();
         });
     }
 
