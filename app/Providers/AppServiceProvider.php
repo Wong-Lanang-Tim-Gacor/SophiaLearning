@@ -4,9 +4,9 @@ namespace App\Providers;
 
 use App\Console\Commands\MakeInterface;
 use App\Console\Commands\MakeRepository;
-use App\Contracts\Interface\AssignmentChatInterface;
-use App\Contracts\Interface\AssignmentInterface;
-use App\Contracts\Interface\ClassroomInterface;
+use App\Contracts\Interfaces\AssignmentChatInterface;
+use App\Contracts\Interfaces\AssignmentInterface;
+use App\Contracts\Interfaces\ClassroomInterface;
 use App\Contracts\Repository\AssignmentChatRepository;
 use App\Contracts\Repository\AssignmentRepository;
 use App\Contracts\Repository\ClassroomRepository;

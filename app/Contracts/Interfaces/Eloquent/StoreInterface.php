@@ -4,5 +4,5 @@ namespace App\Contracts\Interfaces\Eloquent;
 
 interface StoreInterface
 {
-    public function create(array $data);
+    public function store(array $data);
 }
