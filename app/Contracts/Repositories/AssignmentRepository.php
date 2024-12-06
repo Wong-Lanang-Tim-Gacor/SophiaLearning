@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contracts\Repository;
+namespace App\Contracts\Repositories;
 
 use App\Contracts\Interfaces\AssignmentInterface;
 use App\Models\Assignment;
