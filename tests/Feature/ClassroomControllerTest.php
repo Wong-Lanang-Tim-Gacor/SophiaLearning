@@ -6,6 +6,7 @@ use App\Models\Classroom;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
+use Illuminate\Http\UploadedFile;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -42,8 +43,6 @@ class ClassroomControllerTest extends TestCase
                     'class_name',
                     'description',
                     'background_image',
-                    'background_color',
-                    'text_color',
                     'is_archived',
                     'created_at',
                     'updated_at',
@@ -81,8 +80,6 @@ class ClassroomControllerTest extends TestCase
                 'class_name',
                 'description',
                 'background_image',
-                'background_color',
-                'text_color',
                 'is_archived',
                 'created_at',
                 'updated_at',
@@ -107,9 +104,7 @@ class ClassroomControllerTest extends TestCase
             'identifier_code' => 'ABC123',
             'class_name' => 'Mathematics 101',
             'description' => 'Introduction to Mathematics',
-            'background_image' => 'background.jpg',
-            'background_color' => '#ffffff',
-            'text_color' => '#000000',
+            'background_image' => UploadedFile::fake()->image('background.jpg'), 
             'is_archived' => false,
         ];
 
@@ -125,8 +120,6 @@ class ClassroomControllerTest extends TestCase
                 'class_name',
                 'description',
                 'background_image',
-                'background_color',
-                'text_color',
                 'is_archived',
                 'created_at',
                 'updated_at',
@@ -151,8 +144,6 @@ class ClassroomControllerTest extends TestCase
             'class_name' => '',       // Invalid data: class_name kosong
             'description' => 'Invalid Classroom',
             'background_image' => 'background.jpg',
-            'background_color' => '#ffffff',
-            'text_color' => '#000000',
             'is_archived' => false,
         ];
 
@@ -188,8 +179,6 @@ class ClassroomControllerTest extends TestCase
             'class_name' => 'Physics 101',
             'description' => 'Introduction to Physics',
             'background_image' => 'background_new.jpg',
-            'background_color' => '#000000',
-            'text_color' => '#ffffff',
             'is_archived' => false,
         ];
 
@@ -205,8 +194,6 @@ class ClassroomControllerTest extends TestCase
                 'class_name',
                 'description',
                 'background_image',
-                'background_color',
-                'text_color',
                 'is_archived',
                 'created_at',
                 'updated_at',
@@ -236,8 +223,6 @@ class ClassroomControllerTest extends TestCase
             'class_name' => '',      // Invalid: Kosong
             'description' => 'Invalid Update',
             'background_image' => 'background_invalid.jpg',
-            'background_color' => '#000000',
-            'text_color' => '#ffffff',
             'is_archived' => false,
         ];
 
@@ -455,8 +440,6 @@ class ClassroomControllerTest extends TestCase
                     'class_name',
                     'description',
                     'background_image',
-                    'background_color',
-                    'text_color',
                     'is_archived',
                     'students_count',
                     'created_at',
