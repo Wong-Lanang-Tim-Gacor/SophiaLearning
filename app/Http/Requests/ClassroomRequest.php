@@ -29,9 +29,7 @@ class ClassroomRequest extends FormRequest
             'identifier_code' => 'required|string|unique:classrooms,identifier_code,' . $this->identifier_code,
             'class_name' => 'string|required',
             'description' => 'string|nullable',
-            'background_image' => 'string|nullable',
-            'background_color' => 'string|nullable',
-            'text_color' => 'string|nullable',
+            'background_image' => 'image|nullable',
             'is_archived' => 'sometimes|boolean',
         ];
     }

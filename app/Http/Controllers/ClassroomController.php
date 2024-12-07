@@ -6,15 +6,18 @@ use App\Contracts\Interfaces\ClassroomInterface;
 use App\Helpers\ResponseHelper;
 use App\Http\Requests\ClassroomRequest;
 use App\Http\Requests\ClassroomUpdateRequest;
+use App\Services\ClassroomService;
 
 
 class ClassroomController extends Controller
 {
     private ClassroomInterface $classroom;
+    private ClassroomService  $classroomService;
 
-    public function __construct(ClassroomInterface $classroom)
+    public function __construct(ClassroomInterface $classroom, ClassroomService $classroomService)
     {
         $this->classroom = $classroom;
+        $this->classroomService = $classroomService;
     }
 
 
@@ -31,7 +34,13 @@ class ClassroomController extends Controller
     public function store(ClassroomRequest $request)
     {
         try {
+            if($request->hasFile('background_image')) {
+                $imagePath = $this->classroomService->validateAndUpload('background-classroom', $request->file('background_image'));
+            }
             $classroom = $this->classroom->store($request->validated());
+            $this->classroom->update($classroom->id, [
+                'background_image' => $imagePath ?? 'default-background.jpg',
+            ]);
             return ResponseHelper::success($this->classroom->show($classroom->id), 'Classroom created successfully.', 201);
         } catch (\Exception $e) {
             return ResponseHelper::error($request->all(), $e->getMessage());

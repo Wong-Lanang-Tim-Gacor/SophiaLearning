@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('class_name');
             $table->text('description')->nullable();
             $table->string('background_image')->default('class-bg-default.jpg');
-            $table->string('background_color')->nullable()->default('#FFFFFF');
-            $table->string('text_color')->nullable()->default('#000000');
+//            $table->string('background_color')->nullable()->default('#FFFFFF');
+//            $table->string('text_color')->nullable()->default('#000000');
             $table->boolean('is_archived')->default(false);
             $table->timestamps();
         });

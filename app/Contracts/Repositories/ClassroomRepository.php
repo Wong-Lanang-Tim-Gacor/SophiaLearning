@@ -4,11 +4,12 @@ namespace App\Contracts\Repositories;
 
 use App\Contracts\Interfaces\ClassroomInterface;
 use App\Models\Classroom;
+use App\Services\ClassroomService;
 use Illuminate\Database\QueryException;
 
 class ClassroomRepository extends BaseRepository implements ClassroomInterface
 {
-    public function __construct(Classroom $classroom)
+    public function __construct(Classroom $classroom, ClassroomService $classroomService)
     {
         $this->model = $classroom;
     }
@@ -31,7 +32,7 @@ class ClassroomRepository extends BaseRepository implements ClassroomInterface
             ->findOrFail($id);
     }
 
-    public function store(array $data): mixed
+    public function store(mixed $data): mixed
     {
         return $this->model
             ->query()
