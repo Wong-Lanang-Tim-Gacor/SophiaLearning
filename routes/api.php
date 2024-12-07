@@ -9,6 +9,7 @@ use App\Http\Controllers\{
     ClassroomController,
     AssignmentController,
     AssignmentChatController,
+    MaterialController,
     TopicController
 };
 
@@ -34,8 +35,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/classrooms/{classroom_id}/leave', [ClassroomController::class, 'leaveClass']);
     Route::get('/classrooms/student/joined', [ClassroomController::class, 'getJoinedClasses']);
     Route::get('/classrooms/teacher/created', [ClassroomController::class, 'getCreatedClasses']);
-    
+
     Route::apiResource('topics', TopicController::class);
+
+    Route::apiResource('materials', MaterialController::class);
 
     Route::prefix('assignments')->group(function () {
         Route::apiResource('/data', AssignmentController::class);
