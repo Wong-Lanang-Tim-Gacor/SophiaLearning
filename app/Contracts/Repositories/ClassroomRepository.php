@@ -49,4 +49,42 @@ class ClassroomRepository extends BaseRepository implements ClassroomInterface
         return $this->show($id)
             ->delete();
     }
+
+    public function getJoinedClasses(mixed $userId): mixed
+    {
+        return $this->model
+            ->query()
+            ->getJoinedClasses($userId)->get();
+    }
+
+    public function getCreatedClasses(mixed $userId): mixed
+    {
+        return $this->model
+            ->query()
+            ->getCreatedClasses($userId)->get();
+    }
+
+    public function joinClass(int $classroomId, mixed $userId)
+    {
+        $classroom = Classroom::find($classroomId);
+
+        if (!$classroom) return 'ClassroomNotFound';
+
+        if ($classroom->isStudentEnrolled($userId)) return 'AlreadyEnrolled';
+
+        $classroom->students()->attach($userId);
+        return 'Success';
+    }
+
+    public function leaveClass(int $classroomId, mixed $userId)
+    {
+        $classroom = Classroom::find($classroomId);
+
+        if (!$classroom) return 'ClassroomNotFound';
+
+        if (!$classroom->isStudentEnrolled($userId)) return 'NotEnrolled';
+
+        $classroom->students()->detach($userId);
+        return 'Success';
+    }
 }

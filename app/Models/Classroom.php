@@ -23,9 +23,29 @@ class Classroom extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-     // Relasi untuk kelas yang memiliki topik (one-to-many)
-     public function topics()
+    // Relasi untuk kelas yang memiliki topik (one-to-many)
+    public function topics()
+    {
+        return $this->hasMany(Topic::class, 'classroom_id');
+    }
+
+    // Mengecek apakah siswa sudah tergabung dalam kelas
+    public function isStudentEnrolled(mixed $userId) :bool
+    {
+        return $this->students()->where('student_id', $userId)->exists();
+    }
+
+     // Mengambil kelas yang diikuti oleh siswa
+     public function scopeGetJoinedClasses($query, mixed $userId)
      {
-         return $this->hasMany(Topic::class, 'classroom_id');
+         return $query->whereHas('students', function ($query) use ($userId) {
+             $query->where('student_id', $userId);
+         })->with('teacher:id,name');
+     }
+ 
+     // Mengambil kelas yang dibuat oleh guru
+     public function scopeGetCreatedClasses($query, mixed $userId)
+     {
+         return $query->where('user_id', $userId)->withCount('students');
      }
 }
