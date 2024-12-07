@@ -29,7 +29,7 @@ class AssignmentRepository extends BaseRepository implements AssignmentInterface
             ->findOrFail($id);
     }
 
-    public function create(array $data)
+    public function store(array $data)
     {
         return $this->model->query()->create($data);
     }

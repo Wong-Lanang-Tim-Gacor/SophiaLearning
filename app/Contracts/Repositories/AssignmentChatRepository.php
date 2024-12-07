@@ -28,7 +28,7 @@ class AssignmentChatRepository extends BaseRepository implements AssignmentChatI
             ->with(['user'])
             ->findOrFail($id);
     }
-    public function create(array $data)
+    public function store(array $data)
     {
         try {
             $this->model->create($data);
