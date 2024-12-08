@@ -5,6 +5,7 @@ namespace App\Contracts\Repositories;
 use App\Contracts\Interfaces\TopicInterface;
 use App\Contracts\Repositories\BaseRepository;
 use App\Models\Topic;
+use Illuminate\Database\QueryException;
 
 class TopicRepository extends BaseRepository implements TopicInterface
 {
@@ -44,7 +45,12 @@ class TopicRepository extends BaseRepository implements TopicInterface
 
     public function delete(mixed $id): mixed
     {
-        return $this->show($id)
-            ->delete();
+        try {
+            $this->show($id)->delete($id);
+        } catch (QueryException $e) {
+            if ($e->errorInfo[1] == 1451) return false;
+        }
+
+        return true;
     }
 }
