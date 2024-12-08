@@ -26,6 +26,11 @@ class Assignment extends Model
          return $this->hasMany(Answer::class);
      }
 
+    public function attachment(): HasMany
+    {
+        return $this->hasMany(AssignmentAttachment::class);
+     }
+
 //     public function assignmentChat()
 //     {
 //         return $this->hasMany(AssignmentChat::class);

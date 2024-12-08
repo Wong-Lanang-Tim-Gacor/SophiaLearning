@@ -24,16 +24,36 @@ class AssignmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'classroom_id' => 'required|exists:classrooms,id',
-            'topic_id' => 'required|exists:topics,id',
-            'title' => 'required|string',
+            'classroom_id' => 'sometimes|required|exists:classrooms,id',
+            'topic_id' => 'sometimes|required|exists:topics,id',
+            'title' => 'sometimes|required|string',
             'content' => 'string',
-            'due_date' => 'required|date',
+            'due_date' => 'sometimes|required|date',
             'max_score' => 'integer',
             'status' => [
+                'sometimes',
                 'required',
                 Rule::enum(AssignmentStatusEnum::class)
-            ]
+            ],
+            'attachments' => [
+                'sometimes',
+                'required',
+                'array',
+                function ($attribute, $value, $fail) {
+                    // Validate each file in the array
+                    foreach ($value as $file) {
+                        // Check that each file is either an image or document
+                        if (!in_array($file->getClientOriginalExtension(), ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'])) {
+                            return $fail('The file must be an image or document (jpg, jpeg, png, pdf, doc, docx, xls, xlsx, ppt, pptx).');
+                        }
+
+                        // Validate file size (e.g., max 5MB)
+                        if ($file->getSize() > 5 * 1024 * 1024) {
+                            return $fail('The file size cannot exceed 5MB.');
+                        }
+                    }
+                },
+            ],
         ];
     }
 }
