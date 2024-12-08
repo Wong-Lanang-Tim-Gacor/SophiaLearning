@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Assignment extends Model
 {
@@ -19,14 +20,14 @@ class Assignment extends Model
     {
         return $this->belongsTo(Classroom::class);
     }
-    
-    // public function studentAnswer(): HasMany
-    // {
-    //     return $this->hasMany(StudentTaskAnswerCollection::class);
-    // }
 
-    // public function assignmentChat()
-    // {
-    //     return $this->hasMany(AssignmentChat::class);
-    // }
+     public function answer(): HasMany
+     {
+         return $this->hasMany(Answer::class);
+     }
+
+//     public function assignmentChat()
+//     {
+//         return $this->hasMany(AssignmentChat::class);
+//     }
 }

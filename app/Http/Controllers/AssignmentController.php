@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\Interface\AssignmentInterface;
+use App\Contracts\Interfaces\AssignmentInterface;
 use App\Helpers\ResponseHelper;
 use App\Http\Requests\AssignmentRequest;
 use App\Traits\ValidatesRequest;
@@ -34,7 +34,7 @@ class AssignmentController extends Controller
     public function store(AssignmentRequest $request)
     {
         try {
-            $this->assignment->create($request->validated());
+            $this->assignment->store($request->validated());
             return ResponseHelper::success($request->validated(), "success retrieved data!");
         } catch (\Exception $e) {
             return ResponseHelper::error($e->getMessage(), "failed retrieved data!");
