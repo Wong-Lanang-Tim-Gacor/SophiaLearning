@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
 
         User::factory(5)->create();
         Classroom::factory(2)->create();
-        // Topic::factory(10)->create();
-        // Assignment::factory(10)->create();
+        Topic::factory(10)->create();
+         Assignment::factory(10)->create();
     }
 }
