@@ -17,7 +17,7 @@ class AnswerRepository extends BaseRepository implements AnswerInterface
     {
         return $this->model
             ->query()
-            ->with(['attachment','student']) // hanya nama kelas
+            ->with(['attachments','student']) // hanya nama kelas
             ->get();
     }
 
@@ -25,7 +25,7 @@ class AnswerRepository extends BaseRepository implements AnswerInterface
     {
         return $this->model
             ->query()
-            ->with(['attachment','student'])  // hanya nama kelas
+            ->with(['attachments','student'])  // hanya nama kelas
             ->findOrFail($id);
     }
 

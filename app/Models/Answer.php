@@ -21,7 +21,7 @@ class Answer extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function attachment(): HasMany
+    public function attachments(): HasMany
     {
         return $this->hasMany(AnswerAttachment::class);
     }
