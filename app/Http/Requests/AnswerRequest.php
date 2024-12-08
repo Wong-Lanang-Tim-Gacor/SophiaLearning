@@ -22,9 +22,10 @@ class AnswerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'assignment_id' => 'required|exists:assignments,id',
-            'point' => 'numeric',
+            'assignment_id' => 'sometimes|required|exists:assignments,id',
+            'point' => 'sometimes',
             'attachments' => [
+                'sometimes',
                 'required',
                 'array',
                 function ($attribute, $value, $fail) {

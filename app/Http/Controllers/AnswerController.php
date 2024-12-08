@@ -65,8 +65,10 @@ class AnswerController extends Controller
     {
         try {
             $this->answer->update($id, $request->validated());
-            $this->answerService->storeAttachment($id,'answer_attachments',$request->validated(), new AnswerAttachment(), 'answer_id');
-            return ResponseHelper::success($request->validated(), "success updating data!");
+            if ($request->file('attachments')) {
+                $this->answerService->storeAttachment($id,'answer_attachments',$request->validated(), new AnswerAttachment(), 'answer_id');
+            }
+            return ResponseHelper::success($this->answer->show($id), "success updating data!");
         } catch (\Exception $e) {
             return ResponseHelper::error($e->getMessage(), "failed updating data!");
         }
