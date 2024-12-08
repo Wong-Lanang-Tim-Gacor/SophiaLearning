@@ -34,12 +34,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/classrooms/{classroom_id}/leave', [ClassroomController::class, 'leaveClass']);
     Route::get('/classrooms/student/joined', [ClassroomController::class, 'getJoinedClasses']);
     Route::get('/classrooms/teacher/created', [ClassroomController::class, 'getCreatedClasses']);
-    
+
     Route::apiResource('topics', TopicController::class);
 
     Route::prefix('assignments')->group(function () {
         Route::apiResource('/data', AssignmentController::class);
         Route::apiResource('/chat', AssignmentChatController::class)->except(['index', 'show']);
+        Route::apiResource('/answer', \App\Http\Controllers\AnswerController::class);
         Route::get('/chat/{assignmentId}', [AssignmentChatController::class, 'getChatByAssignmentId']);
 
         Route::get('/average-point/{id}', [AssignmentController::class, 'getAveragePoint']);
