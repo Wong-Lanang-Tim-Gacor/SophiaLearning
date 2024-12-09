@@ -6,6 +6,7 @@ use App\Contracts\Interfaces\ClassroomInterface;
 use App\Models\Classroom;
 use App\Services\ClassroomService;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Str;
 
 class ClassroomRepository extends BaseRepository implements ClassroomInterface
 {
@@ -34,6 +35,8 @@ class ClassroomRepository extends BaseRepository implements ClassroomInterface
 
     public function store(mixed $data): mixed
     {
+        $randomIdentifier = Str::random(rand(8, 10));
+        $data['identifier_code'] = $randomIdentifier;
         return $this->model
             ->query()
             ->create($data);
