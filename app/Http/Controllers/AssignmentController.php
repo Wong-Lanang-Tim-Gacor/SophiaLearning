@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\Interface\AssignmentInterface;
+use App\Contracts\Interfaces\AssignmentInterface;
 use App\Helpers\ResponseHelper;
 use App\Http\Requests\AssignmentRequest;
+use App\Models\AssignmentAttachment;
+use App\Services\AssignmentService;
 use App\Traits\ValidatesRequest;
 
 class AssignmentController extends Controller
@@ -12,12 +14,15 @@ class AssignmentController extends Controller
     use ValidatesRequest;
 
     private AssignmentInterface $assignment;
+    private AssignmentService $assignmentService;
 
     public function __construct(
-        AssignmentInterface $assignment
+        AssignmentInterface $assignment,
+        AssignmentService $assignmentService
     )
     {
         $this->assignment = $assignment;
+        $this->assignmentService = $assignmentService;
     }
 
     /**
@@ -34,8 +39,11 @@ class AssignmentController extends Controller
     public function store(AssignmentRequest $request)
     {
         try {
-            $this->assignment->create($request->validated());
-            return ResponseHelper::success($request->validated(), "success retrieved data!");
+            $saveAssignment = $this->assignment->store($request->validated());
+            if($request->hasFile('attachments')){
+                $this->assignmentService->storeAttachment($saveAssignment->id,'answer_attachments',$request->validated(), new AssignmentAttachment(), 'assignment_id');
+            }
+            return ResponseHelper::success($saveAssignment, "success retrieved data!");
         } catch (\Exception $e) {
             return ResponseHelper::error($e->getMessage(), "failed retrieved data!");
         }
@@ -60,7 +68,7 @@ class AssignmentController extends Controller
     {
         try {
             $this->assignment->update($id, $request->validated());
-            return ResponseHelper::success($request->validated(), "success updating data!");
+            return ResponseHelper::success($this->assignment->show($id), "success updating data!");
         } catch (\Exception $e) {
             return ResponseHelper::error($e->getMessage(), "failed updating data!");
         }

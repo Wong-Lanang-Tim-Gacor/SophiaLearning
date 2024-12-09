@@ -2,23 +2,22 @@
 
 namespace App\Contracts\Repositories;
 
-use App\Contracts\Interfaces\TopicInterface;
-use App\Contracts\Repositories\BaseRepository;
-use App\Models\Topic;
+use App\Contracts\Interfaces\AnswerInterface;
+use App\Models\Answer;
 use Illuminate\Database\QueryException;
 
-class TopicRepository extends BaseRepository implements TopicInterface
+class AnswerRepository extends BaseRepository implements AnswerInterface
 {
-    public function __construct(Topic $topic)
+    public function __construct(Answer $answer)
     {
-        $this->model = $topic;
+        $this->model = $answer;
     }
 
     public function get(): mixed
     {
         return $this->model
             ->query()
-            ->with(['classroom:id,class_name']) // hanya nama kelas
+            ->with(['attachments','student']) // hanya nama kelas
             ->get();
     }
 
@@ -26,7 +25,7 @@ class TopicRepository extends BaseRepository implements TopicInterface
     {
         return $this->model
             ->query()
-            ->with(['classroom:id,class_name']) // hanya nama kelas
+            ->with(['attachments','student'])  // hanya nama kelas
             ->findOrFail($id);
     }
 

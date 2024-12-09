@@ -4,11 +4,13 @@ namespace App\Providers;
 
 use App\Console\Commands\MakeInterface;
 use App\Console\Commands\MakeRepository;
+use App\Contracts\Interfaces\AnswerInterface;
 use App\Contracts\Interfaces\AssignmentChatInterface;
 use App\Contracts\Interfaces\AssignmentInterface;
 use App\Contracts\Interfaces\ClassroomInterface;
 use App\Contracts\Interfaces\MaterialInterface;
 use App\Contracts\Interfaces\TopicInterface;
+use App\Contracts\Repositories\AnswerRepository;
 use App\Contracts\Repositories\AssignmentChatRepository;
 use App\Contracts\Repositories\AssignmentRepository;
 use App\Contracts\Repositories\ClassroomRepository;
@@ -27,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
         TopicInterface::class => TopicRepository::class,
         AssignmentInterface::class => AssignmentRepository::class,
         AssignmentChatInterface::class => AssignmentChatRepository::class,
+        AnswerInterface::class => AnswerRepository::class,
         MaterialInterface::class => MaterialRepository::class,
     ];
     public function register(): void

@@ -43,6 +43,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('assignments')->group(function () {
         Route::apiResource('/data', AssignmentController::class);
         Route::apiResource('/chat', AssignmentChatController::class)->except(['index', 'show']);
+        Route::apiResource('/answer', \App\Http\Controllers\AnswerController::class);
         Route::get('/chat/{assignmentId}', [AssignmentChatController::class, 'getChatByAssignmentId']);
 
         Route::get('/average-point/{id}', [AssignmentController::class, 'getAveragePoint']);

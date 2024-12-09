@@ -47,8 +47,13 @@ class ClassroomRepository extends BaseRepository implements ClassroomInterface
 
     public function delete(mixed $id): mixed
     {
-        return $this->show($id)
-            ->delete();
+        try {
+            $this->show($id)->delete($id);
+        } catch (QueryException $e) {
+            if ($e->errorInfo[1] == 1451) return false;
+        }
+
+        return true;
     }
 
     public function getJoinedClasses(mixed $userId): mixed

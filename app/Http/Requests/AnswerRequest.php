@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\AssignmentStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class AssignmentRequest extends FormRequest
+class AnswerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,17 +22,8 @@ class AssignmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'classroom_id' => 'sometimes|required|exists:classrooms,id',
-            'topic_id' => 'sometimes|required|exists:topics,id',
-            'title' => 'sometimes|required|string',
-            'content' => 'string',
-            'due_date' => 'sometimes|required|date',
-            'max_score' => 'integer',
-            'status' => [
-                'sometimes',
-                'required',
-                Rule::enum(AssignmentStatusEnum::class)
-            ],
+            'assignment_id' => 'sometimes|required|exists:assignments,id',
+            'point' => 'sometimes',
             'attachments' => [
                 'sometimes',
                 'required',

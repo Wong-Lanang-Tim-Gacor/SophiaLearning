@@ -60,7 +60,15 @@ class ClassroomController extends Controller
     public function update(ClassroomUpdateRequest $request, string $id)
     {
         try {
-            $this->classroom->update($id, $request->validated());
+            $data = [];
+            if($request->hasFile('background_image')) {
+                $imagePath = $this->classroomService->validateAndUpload('background-classroom', $request->file('background_image'));
+                $data = [
+                    ...$request->validated(),
+                    'background_image' => $imagePath ?? 'default-background.jpg',
+                ];
+            }
+            $this->classroom->update($id, $data);
             return ResponseHelper::success($this->classroom->show($id), 'Classroom updated successfully.');
         } catch (\Exception $e) {
             return ResponseHelper::error(null, $e->getMessage());
