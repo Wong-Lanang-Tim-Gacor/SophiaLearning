@@ -33,7 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('classrooms', ClassroomController::class);
     Route::post('/classrooms/{classroom_id}/join', [ClassroomController::class, 'joinClass']);
     Route::post('/classrooms/{classroom_id}/leave', [ClassroomController::class, 'leaveClass']);
-    Route::get('/classrooms/student/joined', [ClassroomController::class, 'getJoinedClasses']);
+    Route::get('/classrooms/user/joined', [ClassroomController::class, 'getJoinedClasses']);
     Route::get('/classrooms/teacher/created', [ClassroomController::class, 'getCreatedClasses']);
 
     Route::apiResource('topics', TopicController::class);

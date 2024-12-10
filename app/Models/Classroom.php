@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Query\Builder;
 
 class Classroom extends Model
 {
     /** @use HasFactory<\Database\Factories\ClassroomFactory> */
     use HasFactory;
+
     protected $guarded = ['id'];
 
     // Relasi untuk siswa yang tergabung dalam kelas (many-to-many)
@@ -36,24 +38,28 @@ class Classroom extends Model
     }
 
     // Mengecek apakah siswa sudah tergabung dalam kelas
-    public function isStudentEnrolled(mixed $userId) :bool
+    public function isStudentEnrolled(mixed $userId): bool
     {
         return $this->students()->where('student_id', $userId)->exists();
     }
 
-     // Mengambil kelas yang diikuti oleh siswa
-     public function scopeGetJoinedClasses($query, mixed $userId)
-     {
-         return $query->whereHas('students', function ($query) use ($userId) {
-             $query->where('student_id', $userId);
-         })->with('teacher:id,name');
-     }
+    // Mengambil kelas yang diikuti oleh siswa
+    public function scopeGetJoinedClasses($query, mixed $userId)
+    {
+        return $query
+            ->orWhere('user_id', $userId)
+            ->orWhereHas('students', function ($query) use ($userId) {
+            $query->where('student_id', $userId);
+        })->with('teacher:id,name');
 
-     // Mengambil kelas yang dibuat oleh guru
-     public function scopeGetCreatedClasses($query, mixed $userId)
-     {
-         return $query->where('user_id', $userId)->withCount('students');
-     }
+    }
+
+
+    // Mengambil kelas yang dibuat oleh guru
+    public function scopeGetCreatedClasses($query, mixed $userId)
+    {
+        return $query->where('user_id', $userId)->withCount('students');
+    }
 
     public static function boot()
     {

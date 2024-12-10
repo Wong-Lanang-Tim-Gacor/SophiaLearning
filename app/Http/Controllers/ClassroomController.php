@@ -39,10 +39,10 @@ class ClassroomController extends Controller
             if($request->hasFile('background_image')) {
                 $imagePath = $this->classroomService->validateAndUpload('background-classroom', $request->file('background_image'));
             }
-            
+
             $classroomData = array_merge($request->validated(), ['user_id' => $this->user->id]);
             $classroom = $this->classroom->store($classroomData);
-            
+
             $this->classroom->update($classroom->id, [
                 'background_image' => $imagePath ?? 'default-background.jpg',
             ]);
