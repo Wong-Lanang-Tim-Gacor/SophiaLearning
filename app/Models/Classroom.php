@@ -42,10 +42,26 @@ class Classroom extends Model
              $query->where('student_id', $userId);
          })->with('teacher:id,name');
      }
- 
+
      // Mengambil kelas yang dibuat oleh guru
      public function scopeGetCreatedClasses($query, mixed $userId)
      {
          return $query->where('user_id', $userId)->withCount('students');
      }
+
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function (Classroom $classroom) {
+            $randomColor = [
+                'bg-rose-500',
+                'bg-blue-500',
+                'bg-purple-500',
+                'bg-green-600',
+                'bg-yellow-500',
+            ];
+            $randomColor = $randomColor[array_rand($randomColor)];
+            $classroom->bg_tw_class = $randomColor;
+        });
+    }
 }
