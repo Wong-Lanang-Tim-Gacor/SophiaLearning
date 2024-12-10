@@ -25,8 +25,6 @@ class ClassroomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
-//            'identifier_code' => 'required|string|unique:classrooms,identifier_code,' . $this->identifier_code,
             'class_name' => 'string|required',
             'description' => 'string|nullable',
             'background_image' => 'image|nullable',

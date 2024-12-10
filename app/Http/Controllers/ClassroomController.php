@@ -13,11 +13,13 @@ class ClassroomController extends Controller
 {
     private ClassroomInterface $classroom;
     private ClassroomService  $classroomService;
+    private $user;
 
     public function __construct(ClassroomInterface $classroom, ClassroomService $classroomService)
     {
         $this->classroom = $classroom;
         $this->classroomService = $classroomService;
+        $this->user = auth()->user();
     }
 
 
@@ -37,7 +39,10 @@ class ClassroomController extends Controller
             if($request->hasFile('background_image')) {
                 $imagePath = $this->classroomService->validateAndUpload('background-classroom', $request->file('background_image'));
             }
-            $classroom = $this->classroom->store($request->validated());
+            
+            $classroomData = array_merge($request->validated(), ['user_id' => $this->user->id]);
+            $classroom = $this->classroom->store($classroomData);
+            
             $this->classroom->update($classroom->id, [
                 'background_image' => $imagePath ?? 'default-background.jpg',
             ]);
@@ -60,15 +65,12 @@ class ClassroomController extends Controller
     public function update(ClassroomUpdateRequest $request, string $id)
     {
         try {
-            $data = [];
+            $classroomData = $request->validated();
             if($request->hasFile('background_image')) {
                 $imagePath = $this->classroomService->validateAndUpload('background-classroom', $request->file('background_image'));
-                $data = [
-                    ...$request->validated(),
-                    'background_image' => $imagePath ?? 'default-background.jpg',
-                ];
+                $classroomData['background_image'] = $imagePath ?? 'default-background.jpg';
             }
-            $this->classroom->update($id, $data);
+            $this->classroom->update($id, $classroomData);
             return ResponseHelper::success($this->classroom->show($id), 'Classroom updated successfully.');
         } catch (\Exception $e) {
             return ResponseHelper::error(null, $e->getMessage());
@@ -89,8 +91,7 @@ class ClassroomController extends Controller
     public function getJoinedClasses()
     {
         try {
-            $userId = auth()->user()->id;
-            $classes = $this->classroom->getJoinedClasses($userId);
+            $classes = $this->classroom->getJoinedClasses($this->user->id);
             return ResponseHelper::success($classes, 'Classes retrieved successfully.');
         } catch (\Exception $e) {
             return ResponseHelper::error(null, $e->getMessage());
@@ -101,8 +102,7 @@ class ClassroomController extends Controller
     public function getCreatedClasses()
     {
         try {
-            $userId = auth()->user()->id;
-            $classes = $this->classroom->getCreatedClasses($userId);
+            $classes = $this->classroom->getCreatedClasses($this->user->id);
             return ResponseHelper::success($classes, 'Created classes retrieved successfully.');
         } catch (\Exception $e) {
             return ResponseHelper::error(null, $e->getMessage());
@@ -111,8 +111,7 @@ class ClassroomController extends Controller
 
     public function joinClass(int $classroomId)
     {
-        $userId = auth()->user()->id;
-        $result = $this->classroom->joinClass($classroomId, $userId);
+        $result = $this->classroom->joinClass($classroomId, $this->user->id);
 
         if ($result === 'ClassroomNotFound') return ResponseHelper::error(null, 'Classroom not found.');
 
@@ -124,8 +123,7 @@ class ClassroomController extends Controller
 
     public function leaveClass(int $classroomId)
     {
-        $userId = auth()->user()->id;
-        $result = $this->classroom->leaveClass($classroomId, $userId);
+        $result = $this->classroom->leaveClass($classroomId, $this->user->id);
 
         if ($result === 'ClassroomNotFound') return ResponseHelper::error(null, 'Classroom not found.');
 
