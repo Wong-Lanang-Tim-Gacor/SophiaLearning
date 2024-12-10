@@ -100,7 +100,6 @@ class ClassroomControllerTest extends TestCase
         Sanctum::actingAs($user, ['*']); // Authenticated as user
 
         $data = [
-            'user_id' => $user->id,
             'identifier_code' => 'ABC123',
             'class_name' => 'Mathematics 101',
             'description' => 'Introduction to Mathematics',
@@ -139,7 +138,6 @@ class ClassroomControllerTest extends TestCase
         Sanctum::actingAs($user, ['*']); // Authenticated as user
 
         $data = [
-            'user_id' => $user->id,
             'identifier_code' => '',  // Invalid data: identifier_code kosong
             'class_name' => '',       // Invalid data: class_name kosong
             'description' => 'Invalid Classroom',
@@ -174,11 +172,10 @@ class ClassroomControllerTest extends TestCase
 
         // Data update yang valid
         $data = [
-            'user_id' => $user->id,
             'identifier_code' => 'DEF456',
             'class_name' => 'Physics 101',
             'description' => 'Introduction to Physics',
-            'background_image' => 'background_new.jpg',
+            'background_image' => UploadedFile::fake()->image('background.jpg'), 
             'is_archived' => false,
         ];
 
@@ -218,7 +215,6 @@ class ClassroomControllerTest extends TestCase
 
         // Data update yang tidak valid
         $data = [
-            'user_id' => $user->id,
             'identifier_code' => '', // Invalid: Kosong
             'class_name' => '',      // Invalid: Kosong
             'description' => 'Invalid Update',
