@@ -160,7 +160,6 @@ class TopicControllerTest extends TestCase
 
         // Data update yang valid
         $data = [
-            'classroom_id' => $classroom->id,
             'topic_name' => 'Advanced Physics',
         ];
 
@@ -196,7 +195,6 @@ class TopicControllerTest extends TestCase
 
         // Data update yang tidak valid
         $data = [
-            'classroom_id' => 9999, // ID kelas yang tidak ada
             'topic_name' => '',     // Nama topik kosong
         ];
 
