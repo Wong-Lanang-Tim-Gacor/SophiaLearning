@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Classroom extends Model
 {
@@ -27,6 +28,11 @@ class Classroom extends Model
     public function topics()
     {
         return $this->hasMany(Topic::class, 'classroom_id');
+    }
+
+    public function assignments(): HasMany
+    {
+        return $this->hasMany(Assignment::class);
     }
 
     // Mengecek apakah siswa sudah tergabung dalam kelas
