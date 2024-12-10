@@ -58,7 +58,7 @@ class Classroom extends Model
                 'bg-blue-500',
                 'bg-purple-500',
                 'bg-green-600',
-                'bg-yellow-500',
+                'bg-orange-500',
             ];
             $randomColor = $randomColor[array_rand($randomColor)];
             $classroom->bg_tw_class = $randomColor;
