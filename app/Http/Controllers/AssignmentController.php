@@ -7,11 +7,9 @@ use App\Helpers\ResponseHelper;
 use App\Http\Requests\AssignmentRequest;
 use App\Models\AssignmentAttachment;
 use App\Services\AssignmentService;
-use App\Traits\ValidatesRequest;
 
 class AssignmentController extends Controller
 {
-    use ValidatesRequest;
 
     private AssignmentInterface $assignment;
     private AssignmentService $assignmentService;
@@ -19,91 +17,93 @@ class AssignmentController extends Controller
     public function __construct(
         AssignmentInterface $assignment,
         AssignmentService $assignmentService
-    )
-    {
+    ) {
         $this->assignment = $assignment;
         $this->assignmentService = $assignmentService;
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return ResponseHelper::success($this->assignment->get(), "success retrieved data!");
+        try {
+            $assignments = $this->assignment->get();
+            return ResponseHelper::success($assignments, 'Assignment retrieved successfully.');
+        } catch (\Exception $e) {
+            return ResponseHelper::error([], $e->getMessage());
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(AssignmentRequest $request)
     {
         try {
             $saveAssignment = $this->assignment->store($request->validated());
-            if($request->hasFile('attachments')){
-                $this->assignmentService->storeAttachment($saveAssignment->id,'answer_attachments',$request->validated(), new AssignmentAttachment(), 'assignment_id');
+            if ($request->hasFile('attachments')) {
+                $this->assignmentService->storeAttachment($saveAssignment->id, 'answer_attachments', $request->validated(), new AssignmentAttachment(), 'assignment_id');
             }
             return ResponseHelper::success($saveAssignment, "success retrieved data!");
         } catch (\Exception $e) {
-            return ResponseHelper::error($e->getMessage(), "failed retrieved data!");
+            return ResponseHelper::error($request->all(), $e->getMessage());
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
         try {
             return ResponseHelper::success($this->assignment->show($id), "success retrieved data!");
         } catch (\Exception $e) {
-            return ResponseHelper::error($e->getMessage(), "failed retrieved data!");
+            return ResponseHelper::error(null, $e->getMessage());
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(AssignmentRequest $request, string $id)
     {
         try {
             $this->assignment->update($id, $request->validated());
             return ResponseHelper::success($this->assignment->show($id), "success updating data!");
         } catch (\Exception $e) {
-            return ResponseHelper::error($e->getMessage(), "failed updating data!");
+            return ResponseHelper::error(null, $e->getMessage());
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         try {
             $this->assignment->delete($id);
             return ResponseHelper::success(message: "success deleting data!");
         } catch (\Exception $e) {
-            return ResponseHelper::error($e->getMessage(), "failed deleting data!");
+            return ResponseHelper::error(null, $e->getMessage());
         }
     }
 
     public function getAveragePoint(string $id)
     {
-        $data = [
-            'average_score' => $this->assignment->getAveragePoint($id),
-        ];
-        return ResponseHelper::success($data, "success retrieved data!");
+        try {
+            $data = [
+                'average_score' => $this->assignment->getAveragePoint($id),
+            ];
+            return ResponseHelper::success($data, "Success retrieved data!");
+        } catch (\Exception $e) {
+            return ResponseHelper::error(null, $e->getMessage());
+        }
     }
 
     public function getAssignmentByClassId(string $class_id)
     {
-        $assignment = $this->assignment->getAssignmentByClassId($class_id);
-        return ResponseHelper::success($assignment, "success retrieved data!");
+        try {
+            $assignment = $this->assignment->getAssignmentByClassId($class_id);
+            return ResponseHelper::success($assignment, "Success retrieved data!");
+        } catch (\Exception $e) {
+            return ResponseHelper::error(null, $e->getMessage());
+        }
     }
 
     public function getAssignmentByTopicId(string $id)
     {
-        $assignment = $this->assignment->getAssignmentByTopic($id);
-        return ResponseHelper::success($assignment, "success retrieved data!");
+        try {
+            $assignment = $this->assignment->getAssignmentByTopic($id);
+            return ResponseHelper::success($assignment, "success retrieved data!");
+        } catch (\Exception $e) {
+            return ResponseHelper::error(null, $e->getMessage());
+        }
     }
 }
