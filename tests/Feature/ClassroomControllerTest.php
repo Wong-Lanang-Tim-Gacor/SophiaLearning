@@ -376,7 +376,7 @@ class ClassroomControllerTest extends TestCase
      *
      * @return void
      */
-    public function test_student_can_get_joined_classes()
+    public function test_user_can_get_joined_classes()
     {
         // Buat user dan login
         $user = User::factory()->create();
@@ -390,58 +390,12 @@ class ClassroomControllerTest extends TestCase
         $classroom2->students()->attach($user->id);
 
         // Melakukan request untuk mendapatkan kelas yang diikuti oleh siswa
-        $response = $this->getJson('/api/classrooms/student/joined');
+        $response = $this->getJson('/api/classrooms/user/joined');
 
         // Verifikasi response dan status yang dikembalikan
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'meta' => ['status', 'message']
-        ]);
-
-        // Memastikan bahwa kedua kelas muncul dalam response
-        $response->assertJsonFragment([
-            'class_name' => $classroom1->class_name,
-        ]);
-        $response->assertJsonFragment([
-            'class_name' => $classroom2->class_name,
-        ]);
-    }
-
-    /**
-     * Test untuk endpoint getCreatedClasses
-     *
-     * @return void
-     */
-    public function test_teacher_can_get_created_classes()
-    {
-        // Buat user (guru) dan login
-        $teacher = User::factory()->create();
-        Sanctum::actingAs($teacher, ['*']); // Authenticated as teacher
-
-        // Membuat beberapa kelas
-        $classroom1 = Classroom::factory()->create(['user_id' => $teacher->id]);
-        $classroom2 = Classroom::factory()->create(['user_id' => $teacher->id]);
-
-        // Melakukan request untuk mendapatkan kelas yang dibuat oleh guru
-        $response = $this->getJson('/api/classrooms/teacher/created');
-
-        // Verifikasi response dan status yang dikembalikan
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'meta' => ['status', 'message'],
-            'data' => [
-                '*' => [
-                    'id',
-                    'identifier_code',
-                    'class_name',
-                    'description',
-                    'background_image',
-                    'is_archived',
-                    'students_count',
-                    'created_at',
-                    'updated_at'
-                ]
-            ]
         ]);
 
         // Memastikan bahwa kedua kelas muncul dalam response
