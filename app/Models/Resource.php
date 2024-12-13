@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Resource extends Model
 {
-    /** @use HasFactory<\Database\Factories\AssignmentFactory> */
+    /** @use HasFactory<\Database\Factories\ResourceFactory> */
     use HasFactory;
     protected $guarded = ['id'];
 
