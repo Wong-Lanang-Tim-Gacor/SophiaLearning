@@ -73,16 +73,16 @@ class ClassroomRepository extends BaseRepository implements ClassroomInterface
             ->getCreatedClasses($userId)->get();
     }
 
-    public function joinClass(int $classroomId, mixed $userId)
+    public function joinClass(string $classroomCode, mixed $userId)
     {
-        $classroom = Classroom::find($classroomId);
+        $classroom = Classroom::query()->where('identifier_code', $classroomCode)->firstOrFail();
 
         if (!$classroom) return 'ClassroomNotFound';
 
         if ($classroom->isStudentEnrolled($userId)) return 'AlreadyEnrolled';
 
         $classroom->students()->attach($userId);
-        return 'Success';
+        return $classroom;
     }
 
     public function leaveClass(int $classroomId, mixed $userId)

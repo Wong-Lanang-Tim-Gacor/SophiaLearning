@@ -6,7 +6,7 @@ use App\Contracts\Interfaces\Eloquent\{DeleteInterface, GetInterface, UpdateInte
 
 interface ClassroomInterface extends DeleteInterface, UpdateInterface, StoreInterface, ShowInterface, GetInterface
 {
-    public function joinClass(int $classroomId, mixed $userId);
+    public function joinClass(string $classroomCode, mixed $userId);
     public function leaveClass(int $classroomId, mixed $userId);
     public function getJoinedClasses(mixed $userId);
     public function getCreatedClasses(mixed $userId);

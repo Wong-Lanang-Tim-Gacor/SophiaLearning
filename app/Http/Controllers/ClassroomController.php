@@ -109,15 +109,15 @@ class ClassroomController extends Controller
         }
     }
 
-    public function joinClass(int $classroomId)
+    public function joinClass(string $classroomCode)
     {
-        $result = $this->classroom->joinClass($classroomId, $this->user->id);
+        $result = $this->classroom->joinClass($classroomCode, $this->user->id);
 
         if ($result === 'ClassroomNotFound') return ResponseHelper::error(null, 'Classroom not found.');
 
         if ($result === 'AlreadyEnrolled') return ResponseHelper::error(null, 'You are already enrolled in this class.');
 
-        return ResponseHelper::success(null, 'Successfully joined the class.');
+        return ResponseHelper::success($result, 'Successfully joined the class.');
     }
 
 

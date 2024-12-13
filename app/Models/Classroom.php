@@ -34,7 +34,7 @@ class Classroom extends Model
     // Mengecek apakah siswa sudah tergabung dalam kelas
     public function isStudentEnrolled(mixed $userId): bool
     {
-        return $this->students()->where('student_id', $userId)->exists();
+        return $this->students()->where('student_id', $userId)->exists() or $this->where('user_id', $userId)->exists();
     }
 
     // Mengambil kelas yang diikuti oleh siswa
