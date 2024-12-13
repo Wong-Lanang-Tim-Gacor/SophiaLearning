@@ -36,7 +36,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('materials', MaterialController::class);
 
-    Route::prefix('assignments')->group(function () {
+    Route::prefix('resources')->group(function () {
         Route::apiResource('/data', ResourceController::class);
         Route::apiResource('/chat', AssignmentChatController::class)->except(['index', 'show']);
         Route::apiResource('/answer', \App\Http\Controllers\AnswerController::class);
