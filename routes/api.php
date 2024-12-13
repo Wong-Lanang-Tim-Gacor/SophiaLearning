@@ -43,6 +43,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/chat/{assignmentId}', [AssignmentChatController::class, 'getChatByAssignmentId']);
 
         Route::get('/average-point/{id}', [ResourceController::class, 'getAveragePoint']);
-        Route::get('/class/{class_id}', [ResourceController::class, 'getAssignmentByClassId']);
+        Route::get('/class/{class_id}', [ResourceController::class, 'getResourceByClassId']);
     });
 });
