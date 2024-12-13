@@ -24,7 +24,7 @@ class Resource extends Model
 
     public function attachment(): HasMany
     {
-        return $this->hasMany(AssignmentAttachment::class);
+        return $this->hasMany(ResourceAttachment::class);
      }
 
 //     public function assignmentChat()

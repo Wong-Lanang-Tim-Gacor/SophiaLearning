@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Assignment;
+use App\Models\Resource;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\AssignmentAttachment>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ResourceAttachment>
  */
-class AssignmentAttachmentFactory extends Factory
+class ResourceAttachmentFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +18,7 @@ class AssignmentAttachmentFactory extends Factory
     public function definition(): array
     {
         return [
-            'assignment_id' => Assignment::factory(),
+            'resource_id' => Resource::factory(),
             'file_name' => $this->faker->word . '.pdf',
             'file_path' => 'storage/files/' . $this->faker->unique()->word . '.pdf',
             'file_type' => 'application/pdf',

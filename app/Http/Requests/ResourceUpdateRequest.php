@@ -2,16 +2,18 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\ResourceTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class AnswerRequest extends FormRequest
+class ResourceUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,8 +24,16 @@ class AnswerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'resource_id' => 'sometimes|required|exists:resources,id',
-            'point' => 'sometimes',
+            'classroom_id' => 'sometimes|required|exists:classrooms,id',
+            'title' => 'sometimes|required|string',
+            'content' => 'sometimes|string',
+            'due_date' => 'sometimes|required|date',
+            'max_score' => 'sometimes|integer',
+            'type' => [
+                'sometimes',
+                'required',
+                Rule::enum(ResourceTypeEnum::class)
+            ],
             'attachments' => [
                 'sometimes',
                 'required',

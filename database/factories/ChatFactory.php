@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Assignment;
+use App\Models\Resource;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,7 +19,7 @@ class ChatFactory extends Factory
     public function definition(): array
     {
         return [
-            'assignment_id' => Assignment::factory(),
+            'resource_id' => Resource::factory(),
             'user_id' => User::factory(),
             'message' => $this->faker->paragraph,
         ];

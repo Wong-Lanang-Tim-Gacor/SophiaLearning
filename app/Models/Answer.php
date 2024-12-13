@@ -11,9 +11,9 @@ class Answer extends Model
     protected $table = 'answers';
     protected $guarded = ['id'];
 
-    public function assignment(): BelongsTo
+    public function resource(): BelongsTo
     {
-        return $this->belongsTo(Assignment::class);
+        return $this->belongsTo(Resource::class);
     }
 
     public function student(): BelongsTo

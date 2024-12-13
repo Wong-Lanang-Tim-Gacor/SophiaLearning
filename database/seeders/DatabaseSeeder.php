@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Assignment;
 use App\Models\Classroom;
 use App\Models\Resource;
 use App\Models\User;

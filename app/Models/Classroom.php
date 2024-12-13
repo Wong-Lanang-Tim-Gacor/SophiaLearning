@@ -26,9 +26,9 @@ class Classroom extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function assignments(): HasMany
+    public function resources(): HasMany
     {
-        return $this->hasMany(Assignment::class);
+        return $this->hasMany(Resource::class);
     }
 
     // Mengecek apakah siswa sudah tergabung dalam kelas
