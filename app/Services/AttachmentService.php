@@ -38,7 +38,7 @@ class AttachmentService implements UploadValidationInterface
                     'file_extension' => $value->getClientOriginalExtension(),
                     'file_type' => $value->getClientMimeType(),
                     'file_path' => $file,
-                    'file_url' => config('app.url') . '/storage/answer_attachments/' . $file,
+                    'file_url' => config('app.url') . '/storage/'.$file,
                 ];
             }
         }
