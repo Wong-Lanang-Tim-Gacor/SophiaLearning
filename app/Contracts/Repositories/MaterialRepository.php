@@ -17,7 +17,7 @@ class MaterialRepository extends BaseRepository implements MaterialInterface
     {
         return $this->model
             ->query()
-            ->with(['classroom:id,class_name', 'topic:id,topic_name']) 
+            ->with(['classroom:id,class_name']) 
             ->get();
     }
 
@@ -25,7 +25,7 @@ class MaterialRepository extends BaseRepository implements MaterialInterface
     {
         return $this->model
             ->query()
-            ->with(['classroom:id,class_name', 'topic:id,topic_name'])
+            ->with(['classroom:id,class_name'])
             ->findOrFail($id);
     }
 

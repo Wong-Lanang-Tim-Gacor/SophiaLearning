@@ -18,9 +18,5 @@ class Material extends Model
          return $this->belongsTo(Classroom::class);
      }
  
-     // Relasi dengan topic
-     public function topic()
-     {
-         return $this->belongsTo(Topic::class);
-     }
+
 }

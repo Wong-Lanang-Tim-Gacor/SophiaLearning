@@ -53,7 +53,7 @@ class AssignmentRepository extends BaseRepository implements AssignmentInterface
     {
         return $this->model
             ->query()
-            ->with(['topic', 'classroom', 'answer', 'answer.attachments'])
+            ->with(['classroom', 'answer', 'answer.attachments'])
             ->where('classroom_id', $id)
             ->get();
     }
@@ -61,18 +61,9 @@ class AssignmentRepository extends BaseRepository implements AssignmentInterface
     public function getAveragePoint(mixed $id)
     {
         $dataWithAverage = $this->model->query()
-            ->with(['topic', 'classroom'])
+            ->with(['classroom'])
             ->withAvg('answer', 'point')
             ->findOrFail($id);
         return number_format($dataWithAverage->student_answer_avg_point, 2);
-    }
-
-    public function getAssignmentByTopic(mixed $id)
-    {
-        return $this->model
-            ->query()
-            ->with(['topic', 'classroom', 'answer', 'answer.attachments'])
-            ->where('topic_id', $id)
-            ->get();
     }
 }

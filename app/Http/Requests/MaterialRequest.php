@@ -25,7 +25,6 @@ class MaterialRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'topic_id' => 'required|exists:topics,id',
             'classroom_id' => 'required|exists:classrooms,id',
             'title' => 'required|string|max:255',
             'content' => 'required|string',

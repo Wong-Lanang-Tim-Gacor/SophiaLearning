@@ -9,13 +9,11 @@ use App\Contracts\Interfaces\AssignmentChatInterface;
 use App\Contracts\Interfaces\AssignmentInterface;
 use App\Contracts\Interfaces\ClassroomInterface;
 use App\Contracts\Interfaces\MaterialInterface;
-use App\Contracts\Interfaces\TopicInterface;
 use App\Contracts\Repositories\AnswerRepository;
 use App\Contracts\Repositories\AssignmentChatRepository;
 use App\Contracts\Repositories\AssignmentRepository;
 use App\Contracts\Repositories\ClassroomRepository;
 use App\Contracts\Repositories\MaterialRepository;
-use App\Contracts\Repositories\TopicRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,7 +24,6 @@ class AppServiceProvider extends ServiceProvider
 
     private array $register = [
         ClassroomInterface::class => ClassroomRepository::class,
-        TopicInterface::class => TopicRepository::class,
         AssignmentInterface::class => AssignmentRepository::class,
         AssignmentChatInterface::class => AssignmentChatRepository::class,
         AnswerInterface::class => AnswerRepository::class,

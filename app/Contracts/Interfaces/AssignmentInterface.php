@@ -13,6 +13,4 @@ interface AssignmentInterface extends GetInterface,UpdateInterface,DeleteInterfa
     public function getAssignmentByClassId(mixed $id);
 
     public function getAveragePoint(mixed $id);
-
-    public function getAssignmentByTopic(mixed $id);
 }

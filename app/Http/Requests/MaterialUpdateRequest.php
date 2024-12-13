@@ -25,7 +25,6 @@ class MaterialUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'topic_id' => 'sometimes|required|exists:topics,id',
             'classroom_id' => 'sometimes|required|exists:classrooms,id',
             'title' => 'sometimes|required|string|max:255',
             'content' => 'sometimes|required|string',

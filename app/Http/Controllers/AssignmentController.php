@@ -96,14 +96,4 @@ class AssignmentController extends Controller
             return ResponseHelper::error(null, $e->getMessage());
         }
     }
-
-    public function getAssignmentByTopicId(string $id)
-    {
-        try {
-            $assignment = $this->assignment->getAssignmentByTopic($id);
-            return ResponseHelper::success($assignment, "success retrieved data!");
-        } catch (\Exception $e) {
-            return ResponseHelper::error(null, $e->getMessage());
-        }
-    }
 }

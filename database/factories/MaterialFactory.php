@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Classroom;
-use App\Models\Topic;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +19,6 @@ class MaterialFactory extends Factory
     {
         return [
             'classroom_id' => Classroom::factory(),
-            'topic_id' => Topic::factory(),
             'title' => $this->faker->sentence,
             'content' => $this->faker->paragraph,
         ];

@@ -25,7 +25,6 @@ class AssignmentRequest extends FormRequest
     {
         return [
             'classroom_id' => 'sometimes|required|exists:classrooms,id',
-            'topic_id' => 'sometimes|required|exists:topics,id',
             'title' => 'sometimes|required|string',
             'content' => 'string',
             'due_date' => 'sometimes|required|date',

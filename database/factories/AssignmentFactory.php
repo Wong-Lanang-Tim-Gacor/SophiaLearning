@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Enums\AssignmentStatusEnum;
 use App\Models\Classroom;
-use App\Models\Topic;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,9 +19,6 @@ class AssignmentFactory extends Factory
     public function definition(): array
     {
         return [
-            // 'topic_id' => \App\Models\Topic::inRandomOrder()->first()->id,
-            // 'classroom_id' => \App\Models\Classroom::inRandomOrder()->first()->id,
-            'topic_id' => Topic::factory(),
             'classroom_id' => Classroom::factory(),
             'title' => $this->faker->sentence,
             'content' => $this->faker->paragraph,
