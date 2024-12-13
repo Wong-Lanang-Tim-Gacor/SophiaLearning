@@ -2,15 +2,15 @@
 
 namespace App\Contracts\Repositories;
 
-use App\Contracts\Interfaces\AssignmentInterface;
-use App\Models\Assignment;
+use App\Contracts\Interfaces\ResourceInterface;
+use App\Models\Resource;
 use Illuminate\Database\QueryException;
 
-class AssignmentRepository extends BaseRepository implements AssignmentInterface
+class ResourceRepository extends BaseRepository implements ResourceInterface
 {
-    public function __construct(Assignment $assignment)
+    public function __construct(Resource $resource)
     {
-        $this->model = $assignment;
+        $this->model = $resource;
     }
 
     public function get()
@@ -49,7 +49,7 @@ class AssignmentRepository extends BaseRepository implements AssignmentInterface
         return true;
     }
 
-    public function getAssignmentByClassId(mixed $id)
+    public function getResourceByClassId(mixed $id)
     {
         return $this->model
             ->query()
