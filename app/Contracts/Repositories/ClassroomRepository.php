@@ -80,7 +80,6 @@ class ClassroomRepository extends BaseRepository implements ClassroomInterface
         if (!$classroom) return 'ClassroomNotFound';
 
         if ($classroom->isStudentEnrolled($userId)) return 'AlreadyEnrolled';
-
         $classroom->students()->attach($userId);
         return $classroom;
     }
