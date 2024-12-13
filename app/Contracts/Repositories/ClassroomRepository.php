@@ -75,7 +75,7 @@ class ClassroomRepository extends BaseRepository implements ClassroomInterface
 
     public function joinClass(string $classroomCode, mixed $userId)
     {
-        $classroom = Classroom::query()->where('identifier_code', $classroomCode)->firstOrFail();
+        $classroom = Classroom::query()->where('identifier_code', $classroomCode)->with(['students', 'teacher'])->firstOrFail();
 
         if (!$classroom) return 'ClassroomNotFound';
 
