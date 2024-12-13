@@ -29,7 +29,7 @@ class ClassroomRepository extends BaseRepository implements ClassroomInterface
         return $this->model
             ->query()
             ->withCount('students')
-            ->with(['students', 'teacher','assignments'])
+            ->with(['students', 'teacher'])
             ->findOrFail($id);
     }
 

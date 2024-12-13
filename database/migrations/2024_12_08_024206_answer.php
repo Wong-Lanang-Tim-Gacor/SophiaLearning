@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('assignment_id')->constrained('assignments')->cascadeOnDelete();
+            $table->foreignId('resource_id')->constrained('resources')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->integer('point')->default(0);
             $table->enum('status', \App\Enums\AnswerStatusEnum::toArray());
