@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\Classroom;
 use App\Models\Material;
-use App\Models\Topic;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
@@ -32,7 +31,6 @@ class MaterialControllerTest extends TestCase
             'data' => [
                 '*' => [
                     'id',
-                    'topic_id',
                     'classroom_id',
                     'title',
                     'content',
@@ -59,7 +57,6 @@ class MaterialControllerTest extends TestCase
             'meta' => ['status', 'message'],
             'data' => [
                 'id',
-                'topic_id',
                 'classroom_id',
                 'title',
                 'content',
@@ -75,10 +72,8 @@ class MaterialControllerTest extends TestCase
         Sanctum::actingAs($user, ['*']); // Semua pengguna bisa mengakses endpoint ini
 
         $classroom = Classroom::factory()->create(); // Membuat classroom
-        $topic = Topic::factory()->create(); // Membuat topic
 
         $data = [
-            'topic_id' => $topic->id,
             'classroom_id' => $classroom->id,
             'title' => 'Material 101',
             'content' => 'Introduction to Materials',
@@ -91,7 +86,6 @@ class MaterialControllerTest extends TestCase
             'meta' => ['status', 'message'],
             'data' => [
                 'id',
-                'topic_id',
                 'classroom_id',
                 'title',
                 'content',
@@ -107,11 +101,9 @@ class MaterialControllerTest extends TestCase
         Sanctum::actingAs($user, ['*']); // Semua pengguna bisa mengakses endpoint ini
 
         $classroom = Classroom::factory()->create(); // Membuat classroom
-        $topic = Topic::factory()->create(); // Membuat topic
 
         // Mengirim data yang tidak valid (misalnya title kosong)
         $data = [
-            'topic_id' => $topic->id,
             'classroom_id' => $classroom->id,
             'title' => '', // Invalid: title kosong
             'content' => 'Content for invalid material',
@@ -139,10 +131,8 @@ class MaterialControllerTest extends TestCase
         $classroom = Classroom::factory()->create();
         $material = Material::factory()->create(['classroom_id' => $classroom->id]);
 
-        $topic = Topic::factory()->create(); // Membuat topic baru
 
         $data = [
-            'topic_id' => $topic->id,
             'classroom_id' => $classroom->id,
             'title' => 'Updated Material Title',
             'content' => 'Updated Material Content',
@@ -155,7 +145,6 @@ class MaterialControllerTest extends TestCase
             'meta' => ['status', 'message'],
             'data' => [
                 'id',
-                'topic_id',
                 'classroom_id',
                 'title',
                 'content',
@@ -174,12 +163,9 @@ class MaterialControllerTest extends TestCase
         $classroom = Classroom::factory()->create();
         $material = Material::factory()->create(['classroom_id' => $classroom->id]);
 
-        // Create new topic for update
-        $topic = Topic::factory()->create(); // Membuat topic baru
 
         // Mengirim data update yang tidak valid (misalnya title kosong)
         $data = [
-            'topic_id' => $topic->id,
             'classroom_id' => $classroom->id,
             'title' => '', // Invalid: title kosong
             'content' => 'Updated content with invalid title',

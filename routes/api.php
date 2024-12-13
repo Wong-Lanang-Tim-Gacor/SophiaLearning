@@ -10,7 +10,6 @@ use App\Http\Controllers\{
     AssignmentController,
     AssignmentChatController,
     MaterialController,
-    TopicController
 };
 
 use Illuminate\Http\Request;
@@ -35,8 +34,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/classrooms/{classroom_id}/leave', [ClassroomController::class, 'leaveClass']);
     Route::get('/classrooms/user/joined', [ClassroomController::class, 'getJoinedClasses']);
 
-    Route::apiResource('topics', TopicController::class);
-
     Route::apiResource('materials', MaterialController::class);
 
     Route::prefix('assignments')->group(function () {
@@ -47,6 +44,5 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::get('/average-point/{id}', [AssignmentController::class, 'getAveragePoint']);
         Route::get('/class/{class_id}', [AssignmentController::class, 'getAssignmentByClassId']);
-        Route::get('/topic/{topic_id}', [AssignmentController::class, 'getAssignmentByTopicId']);
     });
 });

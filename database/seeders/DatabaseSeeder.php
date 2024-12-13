@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Assignment;
 use App\Models\Classroom;
-use App\Models\Topic;
 use App\Models\User;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -27,7 +26,6 @@ class DatabaseSeeder extends Seeder
         ]);
         User::factory(5)->create();
         Classroom::factory(2)->create();
-        Topic::factory(10)->create();
         Assignment::factory(10)->create();
         $this->call([
             RoleSeeder::class,
