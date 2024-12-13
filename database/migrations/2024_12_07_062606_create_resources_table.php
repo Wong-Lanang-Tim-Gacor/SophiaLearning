@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('content')->nullable();
             $table->dateTime('due_date');
-            $table->enum('type', ResourceTypeEnum::toArray());
+            $table->enum('type', ResourceTypeEnum::toArray())->default(ResourceTypeEnum::ASSIGNMENT->value);
             $table->timestamps();
         });
     }
