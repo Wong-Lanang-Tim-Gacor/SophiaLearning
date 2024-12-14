@@ -40,11 +40,21 @@ class Classroom extends Model
     // Mengambil kelas yang diikuti oleh siswa
     public function scopeGetJoinedClasses($query, mixed $userId)
     {
-        return $query
-            ->orWhere('user_id', $userId)
-            ->orWhereHas('students', function ($query) use ($userId) {
-            $query->where('student_id', $userId);
-        })->with('teacher:id,name');
+        // return $query
+        //     ->orWhere('user_id', $userId)
+        //     ->orWhereHas('students', function ($query) use ($userId) {
+        //     $query->where('student_id', $userId);
+        // })->with('teacher:id,name');
+
+        return $query->with('teacher:id,name')
+        ->where(function ($query) use ($userId) {
+            $query->where('user_id', $userId)
+                ->selectRaw("'created' as role");
+        })
+        ->orWhereHas('students', function ($query) use ($userId) {
+            $query->where('student_id', $userId)
+                ->selectRaw("'joined' as role");
+        });
 
     }
 
