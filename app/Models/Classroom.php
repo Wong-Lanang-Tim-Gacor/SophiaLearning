@@ -46,14 +46,20 @@ class Classroom extends Model
         //     $query->where('student_id', $userId);
         // })->with('teacher:id,name');
 
+        // return $query->with('teacher:id,name')
+        // ->where(function ($query) use ($userId) {
+        //     $query->where('user_id', $userId)
+        //         ->selectRaw("'created' as role");
+        // })
+        // ->orWhereHas('students', function ($query) use ($userId) {
+        //     $query->where('student_id', $userId)
+        //         ->selectRaw("'joined' as role");
+        // });
+
         return $query->with('teacher:id,name')
-        ->where(function ($query) use ($userId) {
-            $query->where('user_id', $userId)
-                ->selectRaw("'created' as role");
-        })
+        ->selectRaw('classrooms.*, CASE WHEN user_id = ? THEN true ELSE false END as is_teacher', [$userId])
         ->orWhereHas('students', function ($query) use ($userId) {
-            $query->where('student_id', $userId)
-                ->selectRaw("'joined' as role");
+            $query->where('student_id', $userId);
         });
 
     }
