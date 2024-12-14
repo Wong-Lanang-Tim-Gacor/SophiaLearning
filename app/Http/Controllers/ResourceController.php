@@ -70,7 +70,7 @@ class ResourceController extends Controller
             if ($request->hasFile('attachments')) {
                 $this->resourceService->storeAttachment($saveResource->id, 'resource_attachments', $request->validated(), new ResourceAttachment(), 'resource_id');
             }
-            return ResponseHelper::success($this->resource->show($saveResource->id), "Resource created successfully.", 201);
+            return ResponseHelper::success($this->resource->getResourceByClassId($request->classroom_id), "Resource created successfully.", 201);
         } catch (\Exception $e) {
             return ResponseHelper::error($request->all(), $e->getMessage());
         }
