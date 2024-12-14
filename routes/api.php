@@ -44,9 +44,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('/data', ResourceController::class);
         Route::apiResource('/chat', AssignmentChatController::class)->except(['index', 'show']);
         Route::apiResource('/answer', AnswerController::class);
-        Route::apiResource('/announcements', [ResourceController::class, 'getAnnouncements']);
-        Route::apiResource('/materials', [ResourceController::class, 'getMaterials']);
-        Route::apiResource('/assignments', [ResourceController::class, 'getAssignments']);
+        Route::get('/announcements', [ResourceController::class, 'getAnnouncements']);
+        Route::get('/materials', [ResourceController::class, 'getMaterials']);
+        Route::get('/assignments', [ResourceController::class, 'getAssignments']);
         Route::get('/chat/{assignmentId}', [AssignmentChatController::class, 'getChatByAssignmentId']);
 
         Route::get('/average-point/{id}', [ResourceController::class, 'getAveragePoint']);
