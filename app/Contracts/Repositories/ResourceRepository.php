@@ -4,6 +4,7 @@ namespace App\Contracts\Repositories;
 
 use App\Contracts\Interfaces\ResourceInterface;
 use App\Enums\ResourceTypeEnum;
+use App\Models\Classroom;
 use App\Models\Resource;
 use Illuminate\Database\QueryException;
 
@@ -79,11 +80,9 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
 
     public function getResourceByClassId(mixed $id)
     {
-        return $this->model
-            ->query()
-            ->with(['classroom', 'answer', 'answer.attachments'])
-            ->where('classroom_id', $id)
-            ->get();
+        return Classroom::query()
+            ->with('resources')
+            ->find($id);
     }
 
     public function getAveragePoint(mixed $id)
