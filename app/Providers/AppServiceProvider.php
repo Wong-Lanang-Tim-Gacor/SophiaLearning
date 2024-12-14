@@ -9,11 +9,13 @@ use App\Contracts\Interfaces\AssignmentChatInterface;
 use App\Contracts\Interfaces\ClassroomInterface;
 use App\Contracts\Interfaces\MaterialInterface;
 use App\Contracts\Interfaces\ResourceInterface;
+use App\Contracts\Interfaces\UserInterface;
 use App\Contracts\Repositories\AnswerRepository;
 use App\Contracts\Repositories\AssignmentChatRepository;
 use App\Contracts\Repositories\ClassroomRepository;
 use App\Contracts\Repositories\MaterialRepository;
 use App\Contracts\Repositories\ResourceRepository;
+use App\Contracts\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -28,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
         AssignmentChatInterface::class => AssignmentChatRepository::class,
         AnswerInterface::class => AnswerRepository::class,
         MaterialInterface::class => MaterialRepository::class,
+        UserInterface::class => UserRepository::class,
     ];
     public function register(): void
     {

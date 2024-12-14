@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\{
+    EditProfileController,
     LoginController,
     LogoutController,
     RegisterController
@@ -24,6 +25,8 @@ Route::prefix('auth')->group(function () {
     Route::post('/login', [LoginController::class, 'handle']);
     Route::post('/register', [RegisterController::class, 'handle']);
     Route::post('/logout', [LogoutController::class, 'handle'])->middleware('auth:sanctum');
+    Route::get('/profile', [EditProfileController::class, 'showProfile'])->middleware('auth:sanctum');
+    Route::post('/profile', [EditProfileController::class, 'updateProfile'])->middleware('auth:sanctum');
 });
 
 // Route::apiResource('classrooms', ClassroomController::class);
