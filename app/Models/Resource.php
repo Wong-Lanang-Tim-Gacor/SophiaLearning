@@ -27,8 +27,8 @@ class Resource extends Model
         return $this->hasMany(ResourceAttachment::class);
      }
 
-//     public function assignmentChat()
-//     {
-//         return $this->hasMany(AssignmentChat::class);
-//     }
+     public function chats()
+     {
+         return $this->hasMany(Chat::class);
+     }
 }

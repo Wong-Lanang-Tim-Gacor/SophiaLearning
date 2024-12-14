@@ -54,7 +54,19 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
     public function show(mixed $id)
     {
         return $this->model->query()
-            ->with(['classroom','classroom.teacher', 'attachment', 'answer', 'answer.attachments'])
+            ->with([
+                'classroom',
+                'classroom.teacher',
+                'chats' => function($query) {
+                    $query->orderBy('created_at', 'desc');
+                },
+                'chats.user',
+                'attachment',
+                'answer' => function($query) {
+                    $query->orderBy('created_at', 'desc');
+                },
+                'answer.attachments'
+            ])
             ->findOrFail($id);
     }
 
