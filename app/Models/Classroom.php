@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 
 class Classroom extends Model
 {
@@ -13,6 +13,14 @@ class Classroom extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    // order dari id terbaru
+    protected static function booted()
+    {
+        static::addGlobalScope('orderByIdDesc', function (Builder $builder) {
+            $builder->orderBy('id', 'DESC');
+        });
+    }
 
     // Relasi untuk siswa yang tergabung dalam kelas (many-to-many)
     public function students()
