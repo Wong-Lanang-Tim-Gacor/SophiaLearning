@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contracts\Interfaces\ResourceInterface;
 use App\Helpers\ResponseHelper;
 use App\Http\Requests\ResourceRequest;
+use App\Http\Requests\ResourceUpdateRequest;
 use App\Models\ResourceAttachment;
 use App\Services\ResourceService;
 
@@ -55,7 +56,7 @@ class ResourceController extends Controller
         }
     }
 
-    public function update(ResourceRequest $request, string $id)
+    public function update(ResourceUpdateRequest $request, string $id)
     {
         try {
             $this->resource->update($id, $request->validated());
