@@ -5,13 +5,13 @@ namespace App\Providers;
 use App\Console\Commands\MakeInterface;
 use App\Console\Commands\MakeRepository;
 use App\Contracts\Interfaces\AnswerInterface;
-use App\Contracts\Interfaces\AssignmentChatInterface;
+use App\Contracts\Interfaces\ChatInterface;
 use App\Contracts\Interfaces\ClassroomInterface;
 use App\Contracts\Interfaces\MaterialInterface;
 use App\Contracts\Interfaces\ResourceInterface;
 use App\Contracts\Interfaces\UserInterface;
 use App\Contracts\Repositories\AnswerRepository;
-use App\Contracts\Repositories\AssignmentChatRepository;
+use App\Contracts\Repositories\ChatRepository;
 use App\Contracts\Repositories\ClassroomRepository;
 use App\Contracts\Repositories\MaterialRepository;
 use App\Contracts\Repositories\ResourceRepository;
@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     private array $register = [
         ClassroomInterface::class => ClassroomRepository::class,
         ResourceInterface::class => ResourceRepository::class,
-        AssignmentChatInterface::class => AssignmentChatRepository::class,
+        ChatInterface::class => ChatRepository::class,
         AnswerInterface::class => AnswerRepository::class,
         MaterialInterface::class => MaterialRepository::class,
         UserInterface::class => UserRepository::class,
