@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\{
     RegisterController
 };
 use App\Http\Controllers\{
+    AnswerController,
     ClassroomController,
     AssignmentChatController,
     MaterialController,
@@ -42,7 +43,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('resources')->group(function () {
         Route::apiResource('/data', ResourceController::class);
         Route::apiResource('/chat', AssignmentChatController::class)->except(['index', 'show']);
-        Route::apiResource('/answer', \App\Http\Controllers\AnswerController::class);
+        Route::apiResource('/answer', AnswerController::class);
+        Route::apiResource('/announcements', [ResourceController::class, 'getAnnouncements']);
+        Route::apiResource('/materials', [ResourceController::class, 'getMaterials']);
+        Route::apiResource('/assignments', [ResourceController::class, 'getAssignments']);
         Route::get('/chat/{assignmentId}', [AssignmentChatController::class, 'getChatByAssignmentId']);
 
         Route::get('/average-point/{id}', [ResourceController::class, 'getAveragePoint']);

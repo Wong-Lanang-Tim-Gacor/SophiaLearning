@@ -33,6 +33,36 @@ class ResourceController extends Controller
         }
     }
 
+    public function getAnnouncements(string $class_id)
+    {
+        try {
+            $resources = $this->resource->getAnnouncements($class_id);
+            return ResponseHelper::success($resources, 'Announcement retrieved successfully.');
+        } catch (\Exception $e) {
+            return ResponseHelper::error([], $e->getMessage());
+        }
+    }
+
+    public function getMaterials(string $class_id)
+    {
+        try {
+            $resources = $this->resource->getMaterials($class_id);
+            return ResponseHelper::success($resources, 'Material retrieved successfully.');
+        } catch (\Exception $e) {
+            return ResponseHelper::error([], $e->getMessage());
+        }
+    }
+
+    public function getAssignments(string $class_id)
+    {
+        try {
+            $resources = $this->resource->getAssignments($class_id);
+            return ResponseHelper::success($resources, 'Assignment retrieved successfully.');
+        } catch (\Exception $e) {
+            return ResponseHelper::error([], $e->getMessage());
+        }
+    }
+
     public function store(ResourceRequest $request)
     {
         try {

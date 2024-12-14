@@ -3,6 +3,7 @@
 namespace App\Contracts\Repositories;
 
 use App\Contracts\Interfaces\ResourceInterface;
+use App\Enums\ResourceTypeEnum;
 use App\Models\Resource;
 use Illuminate\Database\QueryException;
 
@@ -17,9 +18,36 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
     {
         return $this->model
             ->query()
-            ->with(['classroom'])
-            ->withAvg('answer', 'point')
+            ->with(['classroom:id,class_name'])
             ->get();
+    }
+
+    public function getAnnouncements(mixed $id)
+    {
+        return $this->model
+            ->query()
+            ->where('type', ResourceTypeEnum::ANNOUNCEMENT)
+            ->with(['classroom:id,class_name'])
+            ->findOrFail($id);
+    }
+
+    public function getMaterials(mixed $id)
+    {
+        return $this->model
+            ->query()
+            ->where('type', ResourceTypeEnum::MATERIAL)
+            ->with(['classroom:id,class_name'])
+            ->findOrFail($id);
+    }
+
+    public function getAssignments(mixed $id)
+    {
+        return $this->model
+            ->query()
+            ->where('type', ResourceTypeEnum::ASSIGNMENT)
+            ->withAvg('answer', 'point')
+            ->with(['classroom:id,class_name'])
+            ->findOrFail($id);
     }
 
     public function show(mixed $id)
