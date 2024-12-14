@@ -81,7 +81,9 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
     public function getResourceByClassId(mixed $id)
     {
         return Classroom::query()
-            ->with('resources')
+            ->with(['resources' => function ($query) {
+                $query->orderBy('id','desc'); // Order by resource_id
+            }])
             ->find($id);
     }
 
