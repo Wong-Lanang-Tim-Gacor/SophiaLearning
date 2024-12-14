@@ -45,41 +45,22 @@ class Classroom extends Model
         return $this->students()->where('student_id', $userId)->exists() or $this->user_id === $userId;
     }
 
-    // Mengambil kelas yang diikuti oleh siswa
-    public function scopeGetJoinedClasses($query, mixed $userId)
+    // Mengambil kelas yang diikuti atau dibuat
+    public function scopeGetJoinedClasses($query, mixed $userId, bool $isArchived = false)
     {
-        // return $query
-        //     ->orWhere('user_id', $userId)
-        //     ->orWhereHas('students', function ($query) use ($userId) {
-        //     $query->where('student_id', $userId);
-        // })->with('teacher:id,name');
+        $result = $query
+            ->with('teacher:id,name')
+            ->where(function ($subQuery) use ($userId) {
+                $subQuery->where('user_id', $userId)
+                    ->orWhereHas('students', function ($studentQuery) use ($userId) {
+                        $studentQuery->where('student_id', $userId);
+                    });
+            })
+            ->selectRaw('classrooms.*, CASE WHEN user_id = ? THEN true ELSE false END as is_teacher', [$userId]);
+            
+        $query->where('is_archived', $isArchived);
 
-        // return $query->with('teacher:id,name')
-        // ->where(function ($query) use ($userId) {
-        //     $query->where('user_id', $userId)
-        //         ->selectRaw("'created' as role");
-        // })
-        // ->orWhereHas('students', function ($query) use ($userId) {
-        //     $query->where('student_id', $userId)
-        //         ->selectRaw("'joined' as role");
-        // });
-
-        // return $query->with('teacher:id,name')
-        // ->selectRaw('classrooms.*, CASE WHEN user_id = ? THEN true ELSE false END as is_teacher', [$userId])
-        // ->orWhereHas('students', function ($query) use ($userId) {
-        //     $query->where('student_id', $userId);
-        // });
-
-        return $query
-        ->with('teacher:id,name')
-        ->where(function ($subQuery) use ($userId) {
-            $subQuery->where('user_id', $userId)
-                ->orWhereHas('students', function ($studentQuery) use ($userId) {
-                    $studentQuery->where('student_id', $userId);
-                });
-        })
-        ->selectRaw('classrooms.*, CASE WHEN user_id = ? THEN true ELSE false END as is_teacher', [$userId]);
-
+        return $result;
     }
 
 

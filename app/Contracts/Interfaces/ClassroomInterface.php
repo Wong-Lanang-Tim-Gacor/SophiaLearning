@@ -9,5 +9,6 @@ interface ClassroomInterface extends DeleteInterface, UpdateInterface, StoreInte
     public function joinClass(string $classroomCode, mixed $userId);
     public function leaveClass(int $classroomId, mixed $userId);
     public function getJoinedClasses(mixed $userId);
+    public function getArchivedClasses(mixed $userId);
     public function getCreatedClasses(mixed $userId);
 }

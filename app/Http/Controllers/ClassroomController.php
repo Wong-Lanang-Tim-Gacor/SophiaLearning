@@ -99,6 +99,17 @@ class ClassroomController extends Controller
     }
 
 
+    public function getArchivedClasses()
+    {
+        try {
+            $classes = $this->classroom->getArchivedClasses($this->user->id);
+            return ResponseHelper::success($classes, 'Classes retrieved successfully.');
+        } catch (\Exception $e) {
+            return ResponseHelper::error(null, $e->getMessage());
+        }
+    }
+
+
     public function getCreatedClasses()
     {
         try {
