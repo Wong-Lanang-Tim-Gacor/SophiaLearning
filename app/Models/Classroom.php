@@ -56,11 +56,21 @@ class Classroom extends Model
         //         ->selectRaw("'joined' as role");
         // });
 
-        return $query->with('teacher:id,name')
-        ->selectRaw('classrooms.*, CASE WHEN user_id = ? THEN true ELSE false END as is_teacher', [$userId])
-        ->orWhereHas('students', function ($query) use ($userId) {
-            $query->where('student_id', $userId);
-        });
+        // return $query->with('teacher:id,name')
+        // ->selectRaw('classrooms.*, CASE WHEN user_id = ? THEN true ELSE false END as is_teacher', [$userId])
+        // ->orWhereHas('students', function ($query) use ($userId) {
+        //     $query->where('student_id', $userId);
+        // });
+
+        return $query
+        ->with('teacher:id,name')
+        ->where(function ($subQuery) use ($userId) {
+            $subQuery->where('user_id', $userId)
+                ->orWhereHas('students', function ($studentQuery) use ($userId) {
+                    $studentQuery->where('student_id', $userId);
+                });
+        })
+        ->selectRaw('classrooms.*, CASE WHEN user_id = ? THEN true ELSE false END as is_teacher', [$userId]);
 
     }
 
