@@ -27,14 +27,12 @@ class ResourceRequest extends FormRequest
             'classroom_id' => 'required|exists:classrooms,id',
             'title' => 'required|string',
             'content' => 'string',
-            'due_date' => 'required|date',
+            'due_date' => 'nullable|date',
             'max_score' => 'integer',
             'type' => [
-                'required',
                 Rule::enum(ResourceTypeEnum::class)
             ],
             'attachments' => [
-                'required',
                 'array',
                 function ($attribute, $value, $fail) {
                     // Validate each file in the array

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('classroom_id')->constrained('classrooms')->onDelete('cascade');
             $table->string('title');
             $table->text('content')->nullable();
-            $table->dateTime('due_date');
+            $table->date('due_date')->nullable();
             $table->enum('type', ResourceTypeEnum::toArray())->default(ResourceTypeEnum::ASSIGNMENT->value);
             $table->timestamps();
         });

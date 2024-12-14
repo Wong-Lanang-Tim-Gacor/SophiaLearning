@@ -29,7 +29,7 @@ class ResourceUpdateRequest extends FormRequest
             'classroom_id' => 'sometimes|required|exists:classrooms,id',
             'title' => 'sometimes|required|string',
             'content' => 'sometimes|string',
-            'due_date' => 'sometimes|required|date',
+            'due_date' => 'sometimes|date',
             'max_score' => 'sometimes|integer',
             'type' => [
                 'sometimes',
@@ -38,7 +38,6 @@ class ResourceUpdateRequest extends FormRequest
             ],
             'attachments' => [
                 'sometimes',
-                'required',
                 'array',
                 function ($attribute, $value, $fail) {
                     // Validate each file in the array
