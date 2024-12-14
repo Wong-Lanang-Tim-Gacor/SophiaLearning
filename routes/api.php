@@ -36,6 +36,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('classrooms', ClassroomController::class);
     Route::post('/classrooms/{classroomCode}/join', [ClassroomController::class, 'joinClass']);
     Route::post('/classrooms/{classroom_id}/leave', [ClassroomController::class, 'leaveClass']);
+    Route::get('/classrooms/filter/is-archived', [ClassroomController::class, 'getArchivedClasses']);
     Route::get('/classrooms/user/joined', [ClassroomController::class, 'getJoinedClasses']);
 
     Route::apiResource('materials', MaterialController::class);

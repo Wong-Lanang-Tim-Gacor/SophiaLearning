@@ -59,6 +59,13 @@ class ClassroomRepository extends BaseRepository implements ClassroomInterface
         return true;
     }
 
+    public function getArchivedClasses(mixed $userId): mixed
+    {
+        return $this->model
+            ->query()
+            ->getJoinedClasses($userId, isArchived: true)->get();
+    }
+
     public function getJoinedClasses(mixed $userId): mixed
     {
         return $this->model
