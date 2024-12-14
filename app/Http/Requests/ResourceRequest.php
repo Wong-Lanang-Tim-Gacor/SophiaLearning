@@ -3,11 +3,14 @@
 namespace App\Http\Requests;
 
 use App\Enums\ResourceTypeEnum;
+use App\Traits\ValidatesRequest;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class ResourceRequest extends FormRequest
 {
+    use ValidatesRequest;
+
     /**
      * Determine if the user is authorized to make this request.
      */
