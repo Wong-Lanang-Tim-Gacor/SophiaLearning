@@ -35,7 +35,7 @@ class ClassroomRepository extends BaseRepository implements ClassroomInterface
 
     public function store(mixed $data): mixed
     {
-        $randomIdentifier = Str::random(rand(8, 10));
+        $randomIdentifier = Str::random(rand(6, 7));
         $data['identifier_code'] = $randomIdentifier;
         return $this->model
             ->query()
