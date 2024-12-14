@@ -14,11 +14,13 @@ class AnswerController extends Controller
 {
     private AnswerInterface $answer;
     private AnswerService $answerService;
+    private $user;
 
     public function __construct(AnswerInterface $answer, AnswerService $answerService)
     {
         $this->answer = $answer;
         $this->answerService = $answerService;
+        $this->user = auth()->user();
     }
 
     /**
@@ -35,11 +37,11 @@ class AnswerController extends Controller
     public function store(AnswerRequest $request)
     {
         try {
-            $request->merge([
-                    'user_id' => auth()->user()->id
-                ]);
-            $saveAnswer = $this->answer->store($request->all());
-            $this->answerService->storeAttachment($saveAnswer->id,'answer_attachments',$request->validated(), new AnswerAttachment(), 'answer_id');
+            $answerData = array_merge($request->validated(), ['user_id' => $this->user->id]);
+            $saveAnswer = $this->answer->store($answerData);
+            if ($request->hasFile('attachments')) {
+                $this->answerService->storeAttachment($saveAnswer->id, 'answer_attachments', $request->validated(), new AnswerAttachment(), 'answer_id');
+            }
             return ResponseHelper::success($this->answer->show($saveAnswer->id), "success retrieved data!");
         } catch (\Exception $e) {
             return ResponseHelper::error($e->getMessage(), "failed retrieved data!");
@@ -66,7 +68,7 @@ class AnswerController extends Controller
         try {
             $this->answer->update($id, $request->validated());
             if ($request->file('attachments')) {
-                $this->answerService->storeAttachment($id,'answer_attachments',$request->validated(), new AnswerAttachment(), 'answer_id');
+                $this->answerService->storeAttachment($id, 'answer_attachments', $request->validated(), new AnswerAttachment(), 'answer_id');
             }
             return ResponseHelper::success($this->answer->show($id), "success updating data!");
         } catch (\Exception $e) {
@@ -86,5 +88,4 @@ class AnswerController extends Controller
             return ResponseHelper::error($e->getMessage(), "failed deleting data!");
         }
     }
-
 }
