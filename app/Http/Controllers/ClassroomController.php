@@ -36,7 +36,7 @@ class ClassroomController extends Controller
     public function store(ClassroomRequest $request)
     {
         try {
-            if($request->hasFile('background_image')) {
+            if ($request->hasFile('background_image')) {
                 $imagePath = $this->classroomService->validateAndUpload('background-classroom', $request->file('background_image'));
             }
 
@@ -66,7 +66,7 @@ class ClassroomController extends Controller
     {
         try {
             $classroomData = $request->validated();
-            if($request->hasFile('background_image')) {
+            if ($request->hasFile('background_image')) {
                 $imagePath = $this->classroomService->validateAndUpload('background-classroom', $request->file('background_image'));
                 $classroomData['background_image'] = $imagePath ?? 'default-background.jpg';
             }
@@ -122,9 +122,11 @@ class ClassroomController extends Controller
 
     public function joinClass(string $classroomCode)
     {
-        $result = $this->classroom->joinClass($classroomCode, $this->user->id);
-
-        if ($result === 'ClassroomNotFound') return ResponseHelper::error(null, 'Classroom not found.');
+        try {
+            $result = $this->classroom->joinClass($classroomCode, $this->user->id);
+        } catch (\Exception $e) {
+            return ResponseHelper::error(null,  $e->getMessage());
+        }
 
         if ($result === 'AlreadyEnrolled') return ResponseHelper::error(null, 'You are already enrolled in this class.');
 
@@ -134,9 +136,11 @@ class ClassroomController extends Controller
 
     public function leaveClass(int $classroomId)
     {
-        $result = $this->classroom->leaveClass($classroomId, $this->user->id);
-
-        if ($result === 'ClassroomNotFound') return ResponseHelper::error(null, 'Classroom not found.');
+        try {
+            $result = $this->classroom->leaveClass($classroomId, $this->user->id);
+        } catch (\Exception $e) {
+            return ResponseHelper::error(null,  $e->getMessage());
+        }
 
         if ($result === 'NotEnrolled') return ResponseHelper::error(null, 'You are not enrolled in this class.');
 

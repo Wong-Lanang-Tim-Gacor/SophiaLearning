@@ -22,7 +22,7 @@ class ClassroomFactory extends Factory
         $classRoomsStatus = ClassroomStatusEnums::toArray();
         return [
             'user_id' => User::factory(),
-            'identifier_code' => $this->faker->unique()->lexify('CLASS-?????'),
+            'identifier_code' => $this->faker->unique()->lexify('Cls-??'),
             'class_name' => $this->faker->word,
             'description' => $this->faker->text,
             'background_image' => UploadedFile::fake()->image('background.jpg'), 

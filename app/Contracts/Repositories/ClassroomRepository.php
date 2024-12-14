@@ -84,8 +84,6 @@ class ClassroomRepository extends BaseRepository implements ClassroomInterface
     {
         $classroom = Classroom::query()->where('identifier_code', $classroomCode)->with(['students', 'teacher'])->firstOrFail();
 
-        if (!$classroom) return 'ClassroomNotFound';
-
         if ($classroom->isStudentEnrolled($userId)) return 'AlreadyEnrolled';
         $classroom->students()->attach($userId);
         return $classroom;
@@ -93,9 +91,7 @@ class ClassroomRepository extends BaseRepository implements ClassroomInterface
 
     public function leaveClass(int $classroomId, mixed $userId)
     {
-        $classroom = Classroom::find($classroomId);
-
-        if (!$classroom) return 'ClassroomNotFound';
+        $classroom = Classroom::findOrFail($classroomId);
 
         if (!$classroom->isStudentEnrolled($userId)) return 'NotEnrolled';
 
