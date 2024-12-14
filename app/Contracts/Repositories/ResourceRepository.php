@@ -84,6 +84,7 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
             ->with(['resources' => function ($query) {
                 $query->orderBy('id','desc'); // Order by resource_id
             }])
+            ->selectRaw('classrooms.*, CASE WHEN user_id = ? THEN true ELSE false END as is_teacher', [auth()->user()->id])
             ->find($id);
     }
 
