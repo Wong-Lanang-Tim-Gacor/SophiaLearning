@@ -110,16 +110,6 @@ class ClassroomController extends Controller
     }
 
 
-    public function getCreatedClasses()
-    {
-        try {
-            $classes = $this->classroom->getCreatedClasses($this->user->id);
-            return ResponseHelper::success($classes, 'Created classes retrieved successfully.');
-        } catch (\Exception $e) {
-            return ResponseHelper::error(null, $e->getMessage());
-        }
-    }
-
     public function joinClass(string $classroomCode)
     {
         try {
