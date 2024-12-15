@@ -63,6 +63,7 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
                 'chats.user',
                 'attachment',
                 'answer' => function($query) {
+                    $query->where('user_id',auth()->user()->id);
                     $query->orderBy('created_at', 'desc');
                 },
                 'answer.attachments'
