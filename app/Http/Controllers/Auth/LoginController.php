@@ -16,13 +16,13 @@ class LoginController extends Controller
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
-                'message' => 'Invalid credentials'
+                'message' => 'Email atau kata sandi salah!'
             ], 401);
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
         $user['token'] = $token;
 
-        return ResponseHelper::success($user, "success retreived data!");
+        return ResponseHelper::success($user, "Login berhasil!");
     }
 }
