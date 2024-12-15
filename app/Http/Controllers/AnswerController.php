@@ -28,7 +28,7 @@ class AnswerController extends Controller
      */
     public function index()
     {
-        return ResponseHelper::success($this->answer->get(), "success retrieved data!");
+        return ResponseHelper::success($this->answer->get(), "Sukses mengambil data!");
     }
 
     /**
@@ -42,9 +42,9 @@ class AnswerController extends Controller
             if ($request->hasFile('attachments')) {
                 $this->answerService->storeAttachment($saveAnswer->id, 'answer_attachments', $request->validated(), new AnswerAttachment(), 'answer_id');
             }
-            return ResponseHelper::success($this->answer->show($saveAnswer->id), "success retrieved data!");
+            return ResponseHelper::success($this->answer->show($saveAnswer->id), "Jawaban berhasil dikirim!");
         } catch (\Exception $e) {
-            return ResponseHelper::error($e->getMessage(), "failed retrieved data!");
+            return ResponseHelper::error($e->getMessage(), "Terjadi kesalahan!");
         }
     }
 
@@ -54,9 +54,9 @@ class AnswerController extends Controller
     public function show(string $id)
     {
         try {
-            return ResponseHelper::success($this->answer->show($id), "success retrieved data!");
+            return ResponseHelper::success($this->answer->show($id), "Sukses mengambil data!");
         } catch (\Exception $e) {
-            return ResponseHelper::error($e->getMessage(), "failed retrieved data!");
+            return ResponseHelper::error($e->getMessage(), "Terjadi kesalahan!");
         }
     }
 
@@ -70,9 +70,9 @@ class AnswerController extends Controller
             if ($request->file('attachments')) {
                 $this->answerService->storeAttachment($id, 'answer_attachments', $request->validated(), new AnswerAttachment(), 'answer_id');
             }
-            return ResponseHelper::success($this->answer->show($id), "success updating data!");
+            return ResponseHelper::success($this->answer->show($id), "Jawaban berhasil diperbarui!");
         } catch (\Exception $e) {
-            return ResponseHelper::error($e->getMessage(), "failed updating data!");
+            return ResponseHelper::error($e->getMessage(), "Terjadi kesalahan!");
         }
     }
 
@@ -83,9 +83,9 @@ class AnswerController extends Controller
     {
         try {
             $this->answer->delete($id);
-            return ResponseHelper::success(message: "success deleting data!");
+            return ResponseHelper::success(message: "Jawaban berhasil dihapus!");
         } catch (\Exception $e) {
-            return ResponseHelper::error($e->getMessage(), "failed deleting data!");
+            return ResponseHelper::error($e->getMessage(), "Terjadi kesalahan!");
         }
     }
 }
