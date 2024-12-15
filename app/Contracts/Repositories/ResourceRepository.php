@@ -81,7 +81,7 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
                 'answer.attachments'
             ])
             ->findOrFail($id)
-        ->toArray();
+            ->toArray();
         $data['answer'] = $data['answer'][0] ?? [];
         return $data;
     }
@@ -102,11 +102,12 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
 
     public function update(mixed $id, array $data)
     {
-        $oldAttachment = ResourceAttachment::where('resource_id', $id)->first();
-
-        if ($oldAttachment) {
-            Storage::delete($oldAttachment->path);
-            $oldAttachment->delete();
+        if ($data['attachments'][0]) {
+            $oldAttachments = ResourceAttachment::where('resource_id', $id)->get();
+            foreach ($oldAttachments as $attachment) {
+                Storage::delete($attachment->path);
+                $attachment->delete();
+            }
         }
         return $this->findForQuery($id)->update($data);
     }
