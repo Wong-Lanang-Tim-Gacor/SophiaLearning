@@ -32,9 +32,9 @@ class ChatController extends Controller
     {
         try{
             $saveChat = $this->chat->store($request->validated());
-            return ResponseHelper::success($this->chat->show($saveChat->id), 'Success create data!');
+            return ResponseHelper::success($this->chat->show($saveChat->id), 'Pesan berhasil dikirim!');
         }catch (\Exception $exception){
-            return ResponseHelper::error($exception->getMessage(), 'Failed create data');
+            return ResponseHelper::error($exception->getMessage(), 'Terjadi kesalahan');
         }
     }
 
@@ -64,6 +64,6 @@ class ChatController extends Controller
 
     public function getChatByResource(mixed $resourceId)
     {
-        return ResponseHelper::success($this->chat->getChatByResource($resourceId),'Success retrieve data!');
+        return ResponseHelper::success($this->chat->getChatByResource($resourceId),'Sukses mengambil data!');
     }
 }
