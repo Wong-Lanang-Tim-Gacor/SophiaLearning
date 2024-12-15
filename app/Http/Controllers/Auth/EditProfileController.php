@@ -51,6 +51,7 @@ class EditProfileController extends Controller
                 $imagePath = $this->userService->validateAndUpload('profile-photos', $request->file('photo_profile'), $this->user->photo_profile);
                 $userData['photo_profile'] = $imagePath ?? 'default.jpg';
             }
+            $this->user->update($this->userLogin->id, $userData);
             return ResponseHelper::success($this->user->show($this->userLogin->id), 'Profil berhasil diperbarui.');
         } catch (\Exception $e) {
             return ResponseHelper::error(null, $e->getMessage());
