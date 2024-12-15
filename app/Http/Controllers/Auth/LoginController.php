@@ -15,9 +15,7 @@ class LoginController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json([
-                'message' => 'Email atau kata sandi salah!'
-            ], 401);
+            return ResponseHelper::error($user, "Email atau kata sandi salah!");
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
