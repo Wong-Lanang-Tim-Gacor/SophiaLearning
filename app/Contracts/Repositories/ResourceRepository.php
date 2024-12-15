@@ -105,7 +105,7 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
         if ($data['attachments'][0]) {
             $oldAttachments = ResourceAttachment::where('resource_id', $id)->get();
             foreach ($oldAttachments as $attachment) {
-                Storage::delete($attachment->path);
+                Storage::delete($attachment->file_path);
                 $attachment->delete();
             }
         }
