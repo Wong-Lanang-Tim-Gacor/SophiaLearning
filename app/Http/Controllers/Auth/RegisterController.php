@@ -16,6 +16,7 @@ class RegisterController extends Controller
     public function handle(RegisterRequest $registerRequest)
     {
         try {
+            $user['password'] = Hash::make($registerRequest);
             $user = User::create($registerRequest->validated());
             $token = $user->createToken('auth_token')->plainTextToken;
             $user['token'] = $token;
