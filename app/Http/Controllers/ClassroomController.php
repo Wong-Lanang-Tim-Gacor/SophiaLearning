@@ -27,7 +27,7 @@ class ClassroomController extends Controller
     {
         try {
             $classroom = $this->classroom->get();
-            return ResponseHelper::success($classroom, 'Classroom retrieved successfully.');
+            return ResponseHelper::success($classroom, 'Sukses mengambil data!.');
         } catch (\Exception $e) {
             return ResponseHelper::error([], $e->getMessage());
         }
@@ -46,7 +46,7 @@ class ClassroomController extends Controller
             $this->classroom->update($classroom->id, [
                 'background_image' => $imagePath ?? 'default-background.jpg',
             ]);
-            return ResponseHelper::success($this->classroom->show($classroom->id), 'Classroom created successfully.', 201);
+            return ResponseHelper::success($this->classroom->show($classroom->id), 'Kelas berhasil ditambahkan!', 201);
         } catch (\Exception $e) {
             return ResponseHelper::error($request->all(), $e->getMessage());
         }
@@ -56,7 +56,7 @@ class ClassroomController extends Controller
     {
         try {
             $classroom = $this->classroom->show($id);
-            return ResponseHelper::success($classroom, 'Classroom retrieved successfully.');
+            return ResponseHelper::success($classroom, 'Sukses mengambil data!.');
         } catch (\Exception $e) {
             return ResponseHelper::error(null, $e->getMessage());
         }
@@ -71,7 +71,7 @@ class ClassroomController extends Controller
                 $classroomData['background_image'] = $imagePath ?? 'default-background.jpg';
             }
             $this->classroom->update($id, $classroomData);
-            return ResponseHelper::success($this->classroom->show($id), 'Classroom updated successfully.');
+            return ResponseHelper::success($this->classroom->show($id), 'Kelas berhasil diperbarui!');
         } catch (\Exception $e) {
             return ResponseHelper::error(null, $e->getMessage());
         }
@@ -81,7 +81,7 @@ class ClassroomController extends Controller
     {
         try {
             $this->classroom->delete($id);
-            return ResponseHelper::success(null, "Classroom deleted successfully.");
+            return ResponseHelper::success(null, "Kelas berhasil dihapus!");
         } catch (\Exception $e) {
             return ResponseHelper::error(null, $e->getMessage());
         }
@@ -92,7 +92,7 @@ class ClassroomController extends Controller
     {
         try {
             $classes = $this->classroom->getJoinedClasses($this->user->id);
-            return ResponseHelper::success($classes, 'Classes retrieved successfully.');
+            return ResponseHelper::success($classes, 'Sukses mengambil data!');
         } catch (\Exception $e) {
             return ResponseHelper::error(null, $e->getMessage());
         }
@@ -103,7 +103,7 @@ class ClassroomController extends Controller
     {
         try {
             $classes = $this->classroom->getArchivedClasses($this->user->id);
-            return ResponseHelper::success($classes, 'Classes retrieved successfully.');
+            return ResponseHelper::success($classes, 'Sukses mengambil data!');
         } catch (\Exception $e) {
             return ResponseHelper::error(null, $e->getMessage());
         }
@@ -118,9 +118,9 @@ class ClassroomController extends Controller
             return ResponseHelper::error(null,  $e->getMessage());
         }
 
-        if ($result === 'AlreadyEnrolled') return ResponseHelper::error(null, 'You are already enrolled in this class.');
+        if ($result === 'AlreadyEnrolled') return ResponseHelper::error(null, 'Anda telah terdaftar pada kelas ini!');
 
-        return ResponseHelper::success($result, 'Successfully joined the class.');
+        return ResponseHelper::success($result, 'Berhasil bergabung!');
     }
 
 
@@ -132,8 +132,8 @@ class ClassroomController extends Controller
             return ResponseHelper::error(null,  $e->getMessage());
         }
 
-        if ($result === 'NotEnrolled') return ResponseHelper::error(null, 'You are not enrolled in this class.');
+        if ($result === 'NotEnrolled') return ResponseHelper::error(null, 'Anda tidak tergabung!');
 
-        return ResponseHelper::success(null, 'Successfully left the class.');
+        return ResponseHelper::success(null, 'Berhasil meninggalkan kelas!');
     }
 }
