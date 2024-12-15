@@ -13,7 +13,7 @@ class LogoutController extends Controller
     {
         try {
             Auth::user()->tokens()->delete();
-            return ResponseHelper::success(null, "Successfully logged out!");
+            return ResponseHelper::success(null, "Berhasil keluar!");
         } catch (\Exception $e) {
             return ResponseHelper::error($e->getMessage(), 500);
         }
