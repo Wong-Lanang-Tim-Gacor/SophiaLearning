@@ -53,22 +53,24 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
 
     public function show(mixed $id)
     {
-        return $this->model->query()
+        $data = $this->model->query()
             ->with([
                 'classroom',
                 'classroom.teacher',
-                'chats' => function($query) {
+                'chats' => function ($query) {
                     $query->orderBy('created_at', 'desc');
                 },
                 'chats.user',
                 'attachment',
-                'answer' => function($query) {
-                    $query->where('user_id',auth()->user()->id);
-                    $query->orderBy('created_at', 'desc');
+                'answer' => function ($query) {
+                    $query->where('user_id', auth()->user()->id)->first();
                 },
                 'answer.attachments'
             ])
-            ->findOrFail($id);
+            ->findOrFail($id)
+        ->toArray();
+        $data['answer'] = $data['answer'][0] ?? [];
+        return $data;
     }
 
     public function store(array $data)
@@ -95,7 +97,7 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
     {
         return Classroom::query()
             ->with(['resources' => function ($query) {
-                $query->orderBy('id','desc'); // Order by resource_id
+                $query->orderBy('id', 'desc'); // Order by resource_id
             }])
             ->selectRaw('classrooms.*, CASE WHEN user_id = ? THEN true ELSE false END as is_teacher', [auth()->user()->id])
             ->find($id);
