@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\AnswerStatusEnum;
 use App\Traits\ValidatesRequest;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AnswerRequest extends FormRequest
 {
@@ -27,6 +29,9 @@ class AnswerRequest extends FormRequest
         return [
             'resource_id' => 'sometimes|required|exists:resources,id',
             'point' => 'sometimes',
+            'status' => [
+                Rule::enum(AnswerStatusEnum::class)
+            ],
             'attachments' => [
                 'sometimes',
                 'required',

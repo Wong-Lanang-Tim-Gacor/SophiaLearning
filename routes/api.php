@@ -40,6 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/classrooms/user/joined', [ClassroomController::class, 'getJoinedClasses']);
 
     Route::apiResource('materials', MaterialController::class);
+    Route::apiResource('answers', AnswerController::class);
 
     Route::prefix('resources')->group(function () {
         Route::apiResource('/data', ResourceController::class);
