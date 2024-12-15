@@ -52,7 +52,7 @@ class EditProfileController extends Controller
                 $userData['photo_profile'] = $imagePath ?? 'default.jpg';
             }
 
-            $this->user->update($this->user->id, $userData);
+            $this->user->update($this->userLogin->id, $userData);
 
             return ResponseHelper::success($this->user->show($this->userLogin), 'Profil berhasil diperbarui.');
         } catch (\Exception $e) {
