@@ -28,7 +28,7 @@ class AssignmentChatController extends Controller
      */
     public function getChatByAssignmentId(string $assignmentId)
     {
-        return ResponseHelper::success($this->assignmentChat->get($assignmentId), "success retrieved data!");
+        return ResponseHelper::success($this->assignmentChat->get($assignmentId), "Sukses mengambil data!");
     }
 
     /**
@@ -38,9 +38,9 @@ class AssignmentChatController extends Controller
     {
         try {
             $this->assignmentChat->create($request->validated());
-            return ResponseHelper::success($request->validated(), "success store data!");
+            return ResponseHelper::success($request->validated(), "Pesan berhasil dikirim!");
         } catch (\Exception $e) {
-            return ResponseHelper::error($e->getMessage(), "failed store data!");
+            return ResponseHelper::error($e->getMessage(), "Terjadi kesalahan!");
         }
     }
 
@@ -50,9 +50,9 @@ class AssignmentChatController extends Controller
     public function show(string $id)
     {
         try {
-            return ResponseHelper::success($this->assignmentChat->show($id), "success retrieved data!");
+            return ResponseHelper::success($this->assignmentChat->show($id), "Sukses mengambil data!");
         } catch (\Exception $e) {
-            return ResponseHelper::error($e->getMessage(), "failed retrieved data!");
+            return ResponseHelper::error($e->getMessage(), "Terjadi kesalahan!");
         }
     }
 
@@ -63,9 +63,9 @@ class AssignmentChatController extends Controller
     {
         try {
             $this->assignmentChat->update($id, $request->validated());
-            return ResponseHelper::success($request->validated(), "success updating data!");
+            return ResponseHelper::success($request->validated(), "Pesan berhasil diperbarui!");
         } catch (\Exception $e) {
-            return ResponseHelper::error($e->getMessage(), "failed updating data!");
+            return ResponseHelper::error($e->getMessage(), "Terjadi kesalahan!");
         }
     }
 
@@ -76,9 +76,9 @@ class AssignmentChatController extends Controller
     {
         try {
             $this->assignmentChat->delete($id);
-            return ResponseHelper::success(message: "success deleting data!");
+            return ResponseHelper::success(message: "Pesan berhasil dihapus!");
         } catch (\Exception $e) {
-            return ResponseHelper::error($e->getMessage(), "failed deleting data!");
+            return ResponseHelper::error($e->getMessage(), "Terjadi kesalahan!");
         }
     }
 }
