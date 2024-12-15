@@ -46,10 +46,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/chat',[\App\Http\Controllers\ChatController::class,'store']);
         Route::get('/chat/{resourceid}', [\App\Http\Controllers\ChatController::class, 'getChatByResource']);
         Route::apiResource('/answer', AnswerController::class);
-        Route::get('/announcements', [ResourceController::class, 'getAnnouncements']);
-        Route::get('/materials', [ResourceController::class, 'getMaterials']);
-        Route::get('/assignments', [ResourceController::class, 'getAssignments']);
-
+        Route::get('/announcements/{id}', [ResourceController::class, 'getAnnouncements']);
+        Route::get('/materials/{id}', [ResourceController::class, 'getMaterials']);
+        Route::get('/assignments/{id}', [ResourceController::class, 'getAssignments']);
+        Route::get('/assignments/calendar/user', [ResourceController::class, 'getAssignmentsCalendar']);
+    
         Route::get('/average-point/{id}', [ResourceController::class, 'getAveragePoint']);
         Route::get('/class/{class_id}', [ResourceController::class, 'getResourceByClassId']);
     });

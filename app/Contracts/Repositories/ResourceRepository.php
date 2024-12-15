@@ -23,6 +23,17 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
             ->get();
     }
 
+    public function getUserAssignments($userId): mixed
+    {
+        return $this->model
+            ->query()
+            ->ofAssignmentType()
+            ->fromUserClasses($userId)
+            ->with(['classroom:id,class_name'])
+            ->orderBy('id', 'DESC')
+            ->get();
+    }
+
     public function getAnnouncements(mixed $id)
     {
         return $this->model
@@ -73,6 +84,15 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
         return $data;
     }
 
+    public function findForQuery(mixed $id)
+    {
+        return $this->model->query()
+            ->with([
+                'attachment',
+            ])
+            ->findOrFail($id);
+    }
+
     public function store(array $data)
     {
         return $this->model->query()->create($data);
@@ -80,13 +100,13 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
 
     public function update(mixed $id, array $data)
     {
-        return $this->show($id)->update($data);
+        return $this->findForQuery($id)->update($data);
     }
 
     public function delete(mixed $id)
     {
         try {
-            return $this->model->findOrFail($id)->delete();
+            return $this->findForQuery($id)->delete();
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1451) return false;
         }

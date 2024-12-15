@@ -7,6 +7,7 @@ use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserUpdateRequest;
 use App\Services\UserService;
+use Illuminate\Support\Facades\Hash;
 
 class EditProfileController extends Controller
 {
@@ -35,6 +36,16 @@ class EditProfileController extends Controller
     public function updateProfile(UserUpdateRequest $request)
     {
         try {
+            // Jika ada input password, verifikasi current_password terlebih dahulu
+            if ($request->filled('password')) {
+                if (!Hash::check($request->input('current_password'), $this->userLogin->password)) {
+                    return ResponseHelper::error(null, 'The current password is incorrect.');
+                }
+
+                // Enkripsi password baru
+                $request->merge(['password' => Hash::make($request->input('password'))]);
+            }
+
             $userData = $request->validated();
             if ($request->hasFile('photo_profile')) {
                 $imagePath = $this->userService->validateAndUpload('profile-photos', $request->file('photo_profile'), $this->user->photo_profile);

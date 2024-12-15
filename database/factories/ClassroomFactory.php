@@ -26,7 +26,14 @@ class ClassroomFactory extends Factory
             'class_name' => $this->faker->word,
             'description' => $this->faker->text,
             'background_image' => UploadedFile::fake()->image('background.jpg'), 
-            'is_archived' => false,
         ];
+    }
+
+
+    public function archived(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'is_archived' => true
+        ]);
     }
 }

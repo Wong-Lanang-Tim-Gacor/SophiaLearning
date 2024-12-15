@@ -127,4 +127,14 @@ class ResourceController extends Controller
             return ResponseHelper::error(null, $e->getMessage());
         }
     }
+
+    public function getAssignmentsCalendar()
+    {
+        try {
+            $resource = $this->resource->getUserAssignments(auth()->user()->id);
+            return ResponseHelper::success($resource, "Success retrieved data!");
+        } catch (\Exception $e) {
+            return ResponseHelper::error(null, $e->getMessage());
+        }
+    }
 }
