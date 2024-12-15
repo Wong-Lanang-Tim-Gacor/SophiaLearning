@@ -36,6 +36,18 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
             ->get();
     }
 
+    public function getAnswersByResource($id): mixed
+    {
+        return $this->model
+            ->query()
+            ->ofAssignmentType()
+            ->with('answers')
+            ->orderBy('id', 'DESC')
+            ->get();
+    }
+
+    
+
     public function getAnnouncements(mixed $id)
     {
         return $this->model

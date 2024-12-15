@@ -21,4 +21,6 @@ interface ResourceInterface extends GetInterface, UpdateInterface, DeleteInterfa
     public function getAssignments(mixed $id);
 
     public function getUserAssignments(mixed $id);
+
+    public function getAnswersByResource(mixed $id);
 }

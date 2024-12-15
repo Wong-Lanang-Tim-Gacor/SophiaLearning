@@ -140,4 +140,14 @@ class ResourceController extends Controller
             return ResponseHelper::error(null, $e->getMessage());
         }
     }
+
+    public function getAnswersByResource(mixed $id)
+    {
+        try {
+            $resource = $this->resource->getAnswersByResource($id);
+            return ResponseHelper::success($resource, "Sukses mengambil data!");
+        } catch (\Exception $e) {
+            return ResponseHelper::error(null, $e->getMessage());
+        }
+    }
 }
