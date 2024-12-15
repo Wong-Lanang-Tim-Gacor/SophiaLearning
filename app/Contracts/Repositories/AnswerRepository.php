@@ -4,7 +4,9 @@ namespace App\Contracts\Repositories;
 
 use App\Contracts\Interfaces\AnswerInterface;
 use App\Models\Answer;
+use App\Models\AnswerAttachment;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Storage;
 
 class AnswerRepository extends BaseRepository implements AnswerInterface
 {
@@ -17,7 +19,7 @@ class AnswerRepository extends BaseRepository implements AnswerInterface
     {
         return $this->model
             ->query()
-            ->with(['attachments','student']) // hanya nama kelas
+            ->with(['attachments', 'student']) // hanya nama kelas
             ->get();
     }
 
@@ -25,7 +27,7 @@ class AnswerRepository extends BaseRepository implements AnswerInterface
     {
         return $this->model
             ->query()
-            ->with(['attachments','student'])  // hanya nama kelas
+            ->with(['attachments', 'student'])  // hanya nama kelas
             ->findOrFail($id);
     }
 
@@ -38,6 +40,13 @@ class AnswerRepository extends BaseRepository implements AnswerInterface
 
     public function update(mixed $id, array $data): mixed
     {
+        // if (isset($data['attachments'])) {
+        //     $oldAttachments = AnswerAttachment::where('answer_id', $id)->get();
+        //     foreach ($oldAttachments as $attachment) {
+        //         Storage::delete($attachment->file_path);
+        //         $attachment->delete();
+        //     }
+        // }
         return $this->show($id)
             ->update($data);
     }
