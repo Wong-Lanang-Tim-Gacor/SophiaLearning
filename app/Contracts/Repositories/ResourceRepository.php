@@ -40,7 +40,7 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
     {
         return $this->model
             ->query()
-            ->ofAnnouncementType()
+            ->where('type', ResourceTypeEnum::ANNOUNCEMENT)
             ->with(['classroom:id,class_name'])
             ->findOrFail($id);
     }
@@ -49,7 +49,7 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
     {
         return $this->model
             ->query()
-            ->ofMaterialType()
+            ->where('type', ResourceTypeEnum::MATERIAL)
             ->with(['classroom:id,class_name'])
             ->findOrFail($id);
     }
@@ -81,7 +81,7 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
                 'answer.attachments'
             ])
             ->findOrFail($id)
-            ->toArray();
+        ->toArray();
         $data['answer'] = $data['answer'][0] ?? [];
         return $data;
     }
