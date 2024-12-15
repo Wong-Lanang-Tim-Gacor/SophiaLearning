@@ -30,4 +30,22 @@ class MaterialUpdateRequest extends FormRequest
             'content' => 'sometimes|required|string',
         ];
     }
+
+    /**
+     * Custom messages for validation errors.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'classroom_id.required' => 'ID kelas wajib diisi.',
+            'classroom_id.exists' => 'ID kelas tidak ditemukan.',
+            'title.required' => 'Judul wajib diisi.',
+            'title.string' => 'Judul harus berupa teks.',
+            'title.max' => 'Judul tidak boleh lebih dari 255 karakter.',
+            'content.required' => 'Konten wajib diisi.',
+            'content.string' => 'Konten harus berupa teks.',
+        ];
+    }
 }
