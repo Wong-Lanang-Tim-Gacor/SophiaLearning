@@ -13,9 +13,9 @@ class UserRepository extends BaseRepository implements UserInterface
         $this->model = $user;
     }
 
-    public function update(mixed $id, array $data): bool
+    public function update(mixed $id, array $data)
     {
-        return $this->show($id)->update($data);
+        return $this->model->findOrFail($id)->update($data);
     }
 
     public function show(mixed $id): mixed
