@@ -31,4 +31,20 @@ class ClassroomRequest extends FormRequest
             'is_archived' => 'sometimes|boolean',
         ];
     }
+
+    /**
+     * Custom messages for validation errors.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'class_name.string' => 'Nama kelas harus berupa teks.',
+            'class_name.required' => 'Nama kelas wajib diisi.',
+            'description.string' => 'Deskripsi harus berupa teks.',
+            'background_image.image' => 'Gambar latar belakang harus berupa file gambar.',
+            'is_archived.boolean' => 'Status arsip harus berupa nilai true atau false.',
+        ];
+    }
 }
