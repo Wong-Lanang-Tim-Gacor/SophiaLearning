@@ -32,7 +32,7 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
             ->query()
             ->ofAssignmentType()
             ->fromUserClasses($userId)
-            ->with(['classroom:id,class_name'])
+            ->with(['classroom:id,class_name,bg_tw_class'])
             ->orderBy('id', 'DESC')
             ->get();
     }
@@ -41,10 +41,9 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
     {
         return Answer::query()
             ->where('resource_id', $id)
-            ->with(['student','resource','attachments'])
+            ->with(['student', 'resource', 'attachments'])
             ->get();
     }
-
 
 
     public function getAnnouncements(mixed $id)
