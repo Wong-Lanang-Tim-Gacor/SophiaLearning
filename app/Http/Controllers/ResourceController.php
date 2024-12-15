@@ -27,7 +27,7 @@ class ResourceController extends Controller
     {
         try {
             $resources = $this->resource->get();
-            return ResponseHelper::success($resources, 'Resource retrieved successfully.');
+            return ResponseHelper::success($resources, 'Sukses mengambil data.');
         } catch (\Exception $e) {
             return ResponseHelper::error([], $e->getMessage());
         }
@@ -37,7 +37,7 @@ class ResourceController extends Controller
     {
         try {
             $resources = $this->resource->getAnnouncements($class_id);
-            return ResponseHelper::success($resources, 'Announcement retrieved successfully.');
+            return ResponseHelper::success($resources, 'Sukses mengambil data.');
         } catch (\Exception $e) {
             return ResponseHelper::error([], $e->getMessage());
         }
@@ -47,7 +47,7 @@ class ResourceController extends Controller
     {
         try {
             $resources = $this->resource->getMaterials($class_id);
-            return ResponseHelper::success($resources, 'Material retrieved successfully.');
+            return ResponseHelper::success($resources, 'Sukses mengambil data.');
         } catch (\Exception $e) {
             return ResponseHelper::error([], $e->getMessage());
         }
@@ -57,7 +57,7 @@ class ResourceController extends Controller
     {
         try {
             $resources = $this->resource->getAssignments($class_id);
-            return ResponseHelper::success($resources, 'Assignment retrieved successfully.');
+            return ResponseHelper::success($resources, 'Sukses mengambil data.');
         } catch (\Exception $e) {
             return ResponseHelper::error([], $e->getMessage());
         }
@@ -70,7 +70,7 @@ class ResourceController extends Controller
             if ($request->hasFile('attachments')) {
                 $this->resourceService->storeAttachment($saveResource->id, 'resource_attachments', $request->validated(), new ResourceAttachment(), 'resource_id');
             }
-            return ResponseHelper::success($this->resource->getResourceByClassId($request->classroom_id), "Resource created successfully.", 201);
+            return ResponseHelper::success($this->resource->getResourceByClassId($request->classroom_id), "Data berhasil diunggah!", 201);
         } catch (\Exception $e) {
             return ResponseHelper::error($request->all(), $e->getMessage());
         }
@@ -80,7 +80,7 @@ class ResourceController extends Controller
     public function show(string $id)
     {
         try {
-            return ResponseHelper::success($this->resource->show($id), "Resource retrieved successfully.");
+            return ResponseHelper::success($this->resource->show($id), "Sukses mengambil data.");
         } catch (\Exception $e) {
             return ResponseHelper::error(null, $e->getMessage());
         }
@@ -93,7 +93,7 @@ class ResourceController extends Controller
             if ($request->hasFile('attachments')) {
                 $this->resourceService->storeAttachment($id, 'resource_attachments', $request->validated(), new ResourceAttachment(), 'resource_id');
             }
-            return ResponseHelper::success($this->resource->show($id), "Resource deleted successfully.");
+            return ResponseHelper::success($this->resource->show($id), "Data berhasil diperbarui!");
         } catch (\Exception $e) {
             return ResponseHelper::error(null, $e->getMessage());
         }
@@ -103,7 +103,7 @@ class ResourceController extends Controller
     {
         try {
             $this->resource->delete($id);
-            return ResponseHelper::success(message: "Resource deleted successfully.");
+            return ResponseHelper::success(message: "Data berhasil dihapus!");
         } catch (\Exception $e) {
             return ResponseHelper::error(null, $e->getMessage());
         }
@@ -115,7 +115,7 @@ class ResourceController extends Controller
             $data = [
                 'average_score' => $this->resource->getAveragePoint($id),
             ];
-            return ResponseHelper::success($data, "Success retrieved data!");
+            return ResponseHelper::success($data, "Sukses mengambil data!");
         } catch (\Exception $e) {
             return ResponseHelper::error(null, $e->getMessage());
         }
@@ -125,7 +125,7 @@ class ResourceController extends Controller
     {
         try {
             $resource = $this->resource->getResourceByClassId($class_id);
-            return ResponseHelper::success($resource, "Success retrieved data!");
+            return ResponseHelper::success($resource, "Sukses mengambil data!");
         } catch (\Exception $e) {
             return ResponseHelper::error(null, $e->getMessage());
         }
@@ -135,7 +135,7 @@ class ResourceController extends Controller
     {
         try {
             $resource = $this->resource->getUserAssignments(auth()->user()->id);
-            return ResponseHelper::success($resource, "Success retrieved data!");
+            return ResponseHelper::success($resource, "Sukses mengambil data!");
         } catch (\Exception $e) {
             return ResponseHelper::error(null, $e->getMessage());
         }
