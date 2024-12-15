@@ -86,7 +86,7 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
     public function delete(mixed $id)
     {
         try {
-            return $this->show($id)->delete();
+            return $this->model->findOrFail($id)->delete();
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1451) return false;
         }
