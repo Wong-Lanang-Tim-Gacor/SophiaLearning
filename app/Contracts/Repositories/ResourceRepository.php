@@ -4,6 +4,7 @@ namespace App\Contracts\Repositories;
 
 use App\Contracts\Interfaces\ResourceInterface;
 use App\Enums\ResourceTypeEnum;
+use App\Models\Answer;
 use App\Models\Classroom;
 use App\Models\Resource;
 use App\Models\ResourceAttachment;
@@ -38,14 +39,9 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
 
     public function getAnswersByResource($id): mixed
     {
-        return $this->model
-            ->query()
-            ->whereHas('answer', function ($query) use ($id) {
-                $query->where('resource_id', $id);
-            })
-            ->ofAssignmentType()
-            ->with('answer','answer.attachments','answer.student')
-            ->orderBy('id', 'DESC')
+        return Answer::query()
+            ->where('resource_id', $id)
+            ->with(['student','resource','attachments'])
             ->get();
     }
 
