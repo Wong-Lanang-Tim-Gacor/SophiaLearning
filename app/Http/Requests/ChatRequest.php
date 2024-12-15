@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Traits\ValidatesRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ChatRequest extends FormRequest
 {
+    use ValidatesRequest;
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -26,4 +28,18 @@ class ChatRequest extends FormRequest
             'message' => 'string|sometimes'
         ];
     }
+
+    /**
+ * Custom messages for validation errors.
+ *
+ * @return array<string, string>
+ */
+public function messages(): array
+{
+    return [
+        'resource_id.required' => 'ID resource wajib diisi.',
+        'resource_id.exists' => 'ID resource tidak ditemukan.',
+        'message.string' => 'Pesan harus berupa teks.',
+    ];
+}
 }
