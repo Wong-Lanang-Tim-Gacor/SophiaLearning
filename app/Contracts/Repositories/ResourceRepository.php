@@ -6,7 +6,9 @@ use App\Contracts\Interfaces\ResourceInterface;
 use App\Enums\ResourceTypeEnum;
 use App\Models\Classroom;
 use App\Models\Resource;
+use App\Models\ResourceAttachment;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Storage;
 
 class ResourceRepository extends BaseRepository implements ResourceInterface
 {
@@ -100,6 +102,12 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
 
     public function update(mixed $id, array $data)
     {
+        $oldAttachment = ResourceAttachment::where('resource_id', $id)->first();
+
+        if ($oldAttachment) {
+            Storage::delete($oldAttachment->path);
+            $oldAttachment->delete();
+        }
         return $this->findForQuery($id)->update($data);
     }
 
