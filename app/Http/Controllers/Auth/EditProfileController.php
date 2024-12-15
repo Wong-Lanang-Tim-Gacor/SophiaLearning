@@ -48,7 +48,7 @@ class EditProfileController extends Controller
 
             $userData = $request->validated();
             if ($request->hasFile('photo_profile')) {
-                $imagePath = $this->userService->validateAndUpload('profile-photos', $request->file('photo_profile'), $this->user->photo_profile);
+                $imagePath = $this->userService->validateAndUpload('profile-photos', $request->file('photo_profile'), $this->userLogin->photo_profile);
                 $userData['photo_profile'] = $imagePath ?? 'default.jpg';
             }
             $this->user->update($this->userLogin->id, $userData);

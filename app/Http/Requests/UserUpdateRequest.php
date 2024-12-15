@@ -29,7 +29,7 @@ class UserUpdateRequest extends FormRequest
             'username' => 'sometimes|string|max:255|unique:users,username,' . $this->user()->id,
             'email' => 'sometimes|email|max:255|unique:users,email,' . $this->user()->id,
             'phone' => 'sometimes|string|max:15|unique:users,phone,' . $this->user()->id,
-            'photo_profile' => 'sometimes|image|mimes:jpg,jpeg,png|max:5120',
+            'photo_profile' => 'nullable|image|mimes:jpg,jpeg,png|max:5120',
             'password' => 'sometimes|string|min:8|confirmed', // Untuk input kata sandi baru
             'current_password' => 'required_with:password|string', // Harus diisi jika ingin mengubah kata sandi
         ];
