@@ -40,13 +40,16 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
     {
         return $this->model
             ->query()
+            ->whereHas('answer', function ($query) use ($id) {
+                $query->where('resource_id', $id);
+            })
             ->ofAssignmentType()
-            ->with('answers')
+            ->with('answer')
             ->orderBy('id', 'DESC')
             ->get();
     }
 
-    
+
 
     public function getAnnouncements(mixed $id)
     {
