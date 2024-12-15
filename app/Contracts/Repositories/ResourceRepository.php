@@ -44,7 +44,7 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
                 $query->where('resource_id', $id);
             })
             ->ofAssignmentType()
-            ->with('answer')
+            ->with('answer','answer.attachments','answer.student')
             ->orderBy('id', 'DESC')
             ->get();
     }
