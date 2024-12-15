@@ -27,7 +27,8 @@ Route::prefix('auth')->group(function () {
     Route::post('/register', [RegisterController::class, 'handle']);
     Route::post('/logout', [LogoutController::class, 'handle'])->middleware('auth:sanctum');
     Route::get('/profile', [EditProfileController::class, 'showProfile'])->middleware('auth:sanctum');
-    Route::post('/profile', [EditProfileController::class, 'updateProfile'])->middleware('auth:sanctum');
+    Route::put('/profile', [EditProfileController::class, 'updateProfile'])->middleware('auth:sanctum');
+    Route::patch('/profile', [EditProfileController::class, 'updateProfile'])->middleware('auth:sanctum');
 });
 
 // Route::apiResource('classrooms', ClassroomController::class);
@@ -52,7 +53,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/assignments/{identifier_code}', [ResourceController::class, 'getAssignments']);
         Route::get('/assignments/calendar/user', [ResourceController::class, 'getAssignmentsCalendar']);
         Route::get('/assignments/answers/by-resource/{id}', [ResourceController::class, 'getAnswersByResource']);
-    
+
         Route::get('/average-point/{id}', [ResourceController::class, 'getAveragePoint']);
         Route::get('/class/{class_id}', [ResourceController::class, 'getResourceByClassId']);
     });
