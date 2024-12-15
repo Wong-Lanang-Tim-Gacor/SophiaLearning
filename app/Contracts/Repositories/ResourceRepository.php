@@ -102,7 +102,7 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
 
     public function update(mixed $id, array $data)
     {
-        if ($data['attachments'][0]) {
+        if (isset($data['attachments'])) {
             $oldAttachments = ResourceAttachment::where('resource_id', $id)->get();
             foreach ($oldAttachments as $attachment) {
                 Storage::delete($attachment->file_path);

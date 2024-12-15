@@ -89,10 +89,10 @@ class ResourceController extends Controller
     public function update(ResourceUpdateRequest $request, string $id)
     {
         try {
+            $this->resource->update($id, $request->validated());
             if ($request->hasFile('attachments')) {
                 $this->resourceService->storeAttachment($id, 'resource_attachments', $request->validated(), new ResourceAttachment(), 'resource_id');
             }
-            $this->resource->update($id, $request->validated());
             return ResponseHelper::success($this->resource->show($id), "Resource deleted successfully.");
         } catch (\Exception $e) {
             return ResponseHelper::error(null, $e->getMessage());
