@@ -23,11 +23,22 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
             ->get();
     }
 
+    public function getUserAssignments($userId): mixed
+    {
+        return $this->model
+            ->query()
+            ->ofAssignmentType()
+            ->fromUserClasses($userId)
+            ->with(['classroom:id,class_name'])
+            ->orderBy('id', 'DESC')
+            ->get();
+    }
+
     public function getAnnouncements(mixed $id)
     {
         return $this->model
             ->query()
-            ->where('type', ResourceTypeEnum::ANNOUNCEMENT)
+            ->ofAnnouncementType()
             ->with(['classroom:id,class_name'])
             ->findOrFail($id);
     }
@@ -36,7 +47,7 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
     {
         return $this->model
             ->query()
-            ->where('type', ResourceTypeEnum::MATERIAL)
+            ->ofMaterialType()
             ->with(['classroom:id,class_name'])
             ->findOrFail($id);
     }
@@ -68,9 +79,18 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
                 'answer.attachments'
             ])
             ->findOrFail($id)
-        ->toArray();
+            ->toArray();
         $data['answer'] = $data['answer'][0] ?? [];
         return $data;
+    }
+
+    public function findForQuery(mixed $id)
+    {
+        return $this->model->query()
+            ->with([
+                'attachment',
+            ])
+            ->findOrFail($id);
     }
 
     public function store(array $data)
@@ -80,13 +100,13 @@ class ResourceRepository extends BaseRepository implements ResourceInterface
 
     public function update(mixed $id, array $data)
     {
-        return $this->show($id)->update($data);
+        return $this->findForQuery($id)->update($data);
     }
 
     public function delete(mixed $id)
     {
         try {
-            return $this->show($id)->delete();
+            return $this->findForQuery($id)->delete();
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1451) return false;
         }
