@@ -27,7 +27,7 @@ class EditProfileController extends Controller
     {
         try {
             $user = $this->user->show($this->userLogin);
-            return ResponseHelper::success($user, 'Profile retrieved successfully.');
+            return ResponseHelper::success($user, 'Sukses mengambil data!');
         } catch (\Exception $e) {
             return ResponseHelper::error(null, $e->getMessage());
         }
@@ -39,7 +39,7 @@ class EditProfileController extends Controller
             // Jika ada input password, verifikasi current_password terlebih dahulu
             if ($request->filled('password')) {
                 if (!Hash::check($request->input('current_password'), $this->userLogin->password)) {
-                    return ResponseHelper::error(null, 'The current password is incorrect.');
+                    return ResponseHelper::error(null, 'Kata sandi tidak cocok.');
                 }
 
                 // Enkripsi password baru
@@ -54,7 +54,7 @@ class EditProfileController extends Controller
 
             $this->user->update($this->user->id, $userData);
 
-            return ResponseHelper::success($this->user->show($this->userLogin), 'Profile updated successfully.');
+            return ResponseHelper::success($this->user->show($this->userLogin), 'Profil berhasil diperbarui.');
         } catch (\Exception $e) {
             return ResponseHelper::error(null, $e->getMessage());
         }
